@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OA_API", "OA_API\OA_API.csproj", "{4B4585A1-97FD-438A-93FE-46928388567E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oa_server", "oa_server\oa_server.csproj", "{550B6AF7-8A16-48B5-9D86-3A70076B879A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B4585A1-97FD-438A-93FE-46928388567E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B4585A1-97FD-438A-93FE-46928388567E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B4585A1-97FD-438A-93FE-46928388567E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B4585A1-97FD-438A-93FE-46928388567E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550B6AF7-8A16-48B5-9D86-3A70076B879A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550B6AF7-8A16-48B5-9D86-3A70076B879A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550B6AF7-8A16-48B5-9D86-3A70076B879A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550B6AF7-8A16-48B5-9D86-3A70076B879A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
