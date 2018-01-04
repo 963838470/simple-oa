@@ -16,19 +16,15 @@ namespace oa_server.Controllers
             new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M }
         };
 
-        public IEnumerable<Product> GetAllProducts()
+        public IHttpActionResult Get()
         {
-            return products;
+            return Json(products);
         }
 
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult Get(int id)
         {
             var product = products.FirstOrDefault((p) => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
+            return Json(product);
         }
     }
 
