@@ -2,4 +2,5 @@
 简单的oa系统
 
 # 技术栈
-asp.net webapi 4.5
+asp.net 4.6.1
+webapi
