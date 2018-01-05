@@ -7,6 +7,9 @@ using System.Web.Http;
 
 namespace oa_server.Controllers
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     public class UserController : ApiController
     {
         Product[] products = new Product[]
@@ -16,11 +19,20 @@ namespace oa_server.Controllers
             new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M }
         };
 
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             return Json(products);
         }
 
+        /// <summary>
+        /// 获取单个用户
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             var product = products.FirstOrDefault((p) => p.Id == id);
