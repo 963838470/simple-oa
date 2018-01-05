@@ -1,4 +1,5 @@
-﻿using oa_server.Models;
+﻿using oa_server.DAL;
+using oa_server.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace oa_server.Controllers
     /// </summary>
     public class UserController : ApiController
     {
-        private OAEntities db = new Models.OAEntities();
+        private AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
 
         /// <summary>
         /// 获取所有用户
@@ -21,7 +22,7 @@ namespace oa_server.Controllers
         /// <returns></returns>
         public IHttpActionResult Get()
         {
-            return Json(db.AuthorityUser.ToList());
+            return Json(_AuthorityUserDal.Get());
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace oa_server.Controllers
         /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
-            var product = db.AuthorityUser.FirstOrDefault(o => o.Id == id);
+            var product = _AuthorityUserDal.Get().FirstOrDefault(o => o.Id == id);
             return Json(product);
         }
 
@@ -43,9 +44,7 @@ namespace oa_server.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]AuthorityUser user)
         {
-            user = db.AuthorityUser.Add(user);
-            db.SaveChanges();
-            return Json(user);
+            return Json(_AuthorityUserDal.Add(user));
         }
 
         /// <summary>
@@ -56,10 +55,7 @@ namespace oa_server.Controllers
         [HttpPut]
         public IHttpActionResult Put([FromBody]AuthorityUser user)
         {
-            user = db.AuthorityUser.Attach(user);
-            db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            return Json(user);
+            return Json(_AuthorityUserDal.Update(user));
         }
 
         /// <summary>
@@ -70,10 +66,17 @@ namespace oa_server.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            AuthorityUser user = db.AuthorityUser.FirstOrDefault(o => o.Id == id);
-            db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
-            db.SaveChanges();
-            return Ok();
+            try
+            {
+                AuthorityUser user = _AuthorityUserDal.Get().FirstOrDefault(o => o.Id == id);
+                _AuthorityUserDal.Delete(user);
+                return Ok("删除成功");
+            }
+            catch (Exception ex)
+            {
+                return Ok("删除失败!");
+            }
+
         }
     }
 }
