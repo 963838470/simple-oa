@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace oa_server.Controllers
 {
     /// <summary>
-    /// 用户
+    /// 用户接口
     /// </summary>
     public class UserController : ApiController
     {
