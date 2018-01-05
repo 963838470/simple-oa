@@ -20,8 +20,5 @@ namespace oa_server.Models
         public int OuId { get; set; }
       
         public int UserId { get; set; }
-    
-        public virtual AuthorityOu AuthorityOu { get; set; }
-        public virtual AuthorityUser AuthorityUser { get; set; }
     }
 }

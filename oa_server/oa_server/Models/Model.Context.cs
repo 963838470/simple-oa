@@ -25,8 +25,8 @@ namespace oa_server.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AuthorityUser> AuthorityUser { get; set; }
         public virtual DbSet<AuthorityOu> AuthorityOu { get; set; }
         public virtual DbSet<AuthorityOuUser> AuthorityOuUser { get; set; }
+        public virtual DbSet<AuthorityUser> AuthorityUser { get; set; }
     }
 }

@@ -157,11 +157,19 @@
     <Compile Include="App_Start\CachingSwaggerProvider.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ouController.cs" />
+    <Compile Include="Controllers\userController.cs" />
+    <Compile Include="DAL\AuthorityOuDal.cs" />
     <Compile Include="DAL\AuthorityUserDal.cs" />
     <Compile Include="DAL\BaseDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthorityOu.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthorityOuUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthorityUser.cs">
       <DependentUpon>Model.tt</DependentUpon>

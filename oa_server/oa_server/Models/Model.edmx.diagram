@@ -5,11 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="90343e6271654283aa808bed5217762d" Name="Diagram1">
-        <EntityTypeShape EntityType="OAModel.AuthorityUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OAModel.AuthorityOu" Width="1.5" PointX="0.75" PointY="4.875" />
-        <EntityTypeShape EntityType="OAModel.AuthorityOuUser" Width="1.5" PointX="3" PointY="1.25" />
-        <AssociationConnector Association="OAModel.FK_AuthorityOuUser_AuthorityOu" />
-        <AssociationConnector Association="OAModel.FK_AuthorityOuUser_AuthorityUser" />
+        <EntityTypeShape EntityType="OAModel.AuthorityOu" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OAModel.AuthorityOuUser" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OAModel.AuthorityUser" Width="1.5" PointX="2.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,12 +14,6 @@ namespace oa_server.Models
     
     public partial class AuthorityOu
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AuthorityOu()
-        {
-            this.AuthorityOuUser = new HashSet<AuthorityOuUser>();
-        }
-    
       
         public int Id { get; set; }
       
@@ -34,8 +28,5 @@ namespace oa_server.Models
         public string Picture { get; set; }
       
         public string Path { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AuthorityOuUser> AuthorityOuUser { get; set; }
     }
 }

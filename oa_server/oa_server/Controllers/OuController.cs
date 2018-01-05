@@ -7,69 +7,70 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+
 namespace oa_server.Controllers
 {
     /// <summary>
-    /// 用户接口
+    /// 机构接口
     /// </summary>
-    public class userController : ApiController
+    public class ouController : ApiController
     {
-        private AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
+        private AuthorityOuDal _AuthorityOuDal = new AuthorityOuDal();
 
         /// <summary>
-        /// 获取所有用户
+        /// 获取所有机构
         /// </summary>
         /// <returns></returns>
         public IHttpActionResult Get()
         {
-            return Json(_AuthorityUserDal.Get());
+            return Json(_AuthorityOuDal.Get().ToList());
         }
 
         /// <summary>
-        /// 获取指定用户
+        /// 获取指定机构
         /// </summary>
-        /// <param name="id">用户ID</param>
+        /// <param name="id">机构ID</param>
         /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
-            var product = _AuthorityUserDal.Get().FirstOrDefault(o => o.Id == id);
+            var product = _AuthorityOuDal.Get().FirstOrDefault(o => o.Id == id);
             return Json(product);
         }
 
         /// <summary>
-        /// 新增用户
+        /// 新增机构
         /// </summary>
-        /// <param name="model">用户实体</param>
+        /// <param name="model">机构实体</param>
         /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]AuthorityUser model)
+        public IHttpActionResult Post([FromBody]AuthorityOu model)
         {
-            return Json(_AuthorityUserDal.Add(model));
+            return Json(_AuthorityOuDal.Add(model));
         }
 
         /// <summary>
-        /// 修改用户
+        /// 修改机构
         /// </summary>
-        /// <param name="model">用户实体</param>
+        /// <param name="model">机构实体</param>
         /// <returns></returns>
         [HttpPut]
-        public IHttpActionResult Put([FromBody]AuthorityUser model)
+        public IHttpActionResult Put([FromBody]AuthorityOu model)
         {
-            return Json(_AuthorityUserDal.Update(model));
+            return Json(_AuthorityOuDal.Update(model));
         }
 
         /// <summary>
-        /// 删除用户
+        /// 删除机构
         /// </summary>
-        /// <param name="id">用户ID</param>
+        /// <param name="id">机构ID</param>
         /// <returns></returns>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try
             {
-                AuthorityUser model = _AuthorityUserDal.Get().FirstOrDefault(o => o.Id == id);
-                _AuthorityUserDal.Delete(model);
+                AuthorityOu model = _AuthorityOuDal.Get().FirstOrDefault(o => o.Id == id);
+                _AuthorityOuDal.Delete(model);
                 return Ok("删除成功");
             }
             catch (Exception ex)
