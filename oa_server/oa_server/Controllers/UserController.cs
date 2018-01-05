@@ -35,12 +35,45 @@ namespace oa_server.Controllers
             return Json(product);
         }
 
+        /// <summary>
+        /// 新增用户
+        /// </summary>
+        /// <param name="user">用户实体</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult Post([FromBody]AuthorityUser user)
         {
             user = db.AuthorityUser.Add(user);
             db.SaveChanges();
             return Json(user);
+        }
+
+        /// <summary>
+        /// 修改用户
+        /// </summary>
+        /// <param name="user">用户实体</param>
+        /// <returns></returns>
+        [HttpPut]
+        public IHttpActionResult Put([FromBody]AuthorityUser user)
+        {
+            user = db.AuthorityUser.Attach(user);
+            db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Json(user);
+        }
+
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns></returns>
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            AuthorityUser user = db.AuthorityUser.FirstOrDefault(o => o.Id == id);
+            db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return Ok();
         }
     }
 }
