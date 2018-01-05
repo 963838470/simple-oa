@@ -26,5 +26,7 @@ namespace oa_server.Models
         }
     
         public virtual DbSet<AuthorityUser> AuthorityUser { get; set; }
+        public virtual DbSet<AuthorityOu> AuthorityOu { get; set; }
+        public virtual DbSet<AuthorityOuUser> AuthorityOuUser { get; set; }
     }
 }

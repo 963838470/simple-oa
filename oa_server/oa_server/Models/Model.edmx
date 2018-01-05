@@ -5,6 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuthorityOu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nchar" MaxLength="1000" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="50" />
+          <Property Name="Path" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AuthorityOuUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OuId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="AuthorityUser">
           <Key>
             <PropertyRef Name="Id" />
@@ -19,8 +39,42 @@
           <Property Name="Address" Type="nvarchar" MaxLength="500" />
           <Property Name="Remark" Type="nvarchar" MaxLength="1000" />
         </EntityType>
+        <Association Name="FK_AuthorityOuUser_AuthorityOu">
+          <End Role="AuthorityOu" Type="Self.AuthorityOu" Multiplicity="1" />
+          <End Role="AuthorityOuUser" Type="Self.AuthorityOuUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthorityOu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthorityOuUser">
+              <PropertyRef Name="OuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorityOuUser_AuthorityUser">
+          <End Role="AuthorityUser" Type="Self.AuthorityUser" Multiplicity="1" />
+          <End Role="AuthorityOuUser" Type="Self.AuthorityOuUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthorityUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthorityOuUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="OAModelStoreContainer">
+          <EntitySet Name="AuthorityOu" EntityType="Self.AuthorityOu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorityOuUser" EntityType="Self.AuthorityOuUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AuthorityUser" EntityType="Self.AuthorityUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AuthorityOuUser_AuthorityOu" Association="Self.FK_AuthorityOuUser_AuthorityOu">
+            <End Role="AuthorityOu" EntitySet="AuthorityOu" />
+            <End Role="AuthorityOuUser" EntitySet="AuthorityOuUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorityOuUser_AuthorityUser" Association="Self.FK_AuthorityOuUser_AuthorityUser">
+            <End Role="AuthorityUser" EntitySet="AuthorityUser" />
+            <End Role="AuthorityOuUser" EntitySet="AuthorityOuUser" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -39,10 +93,68 @@
           <Property Name="IsDisable" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AuthorityOuUser" Relationship="OAModel.FK_AuthorityOuUser_AuthorityUser" FromRole="AuthorityUser" ToRole="AuthorityOuUser" />
         </EntityType>
         <EntityContainer Name="OAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AuthorityUser" EntityType="Self.AuthorityUser" />
+          <EntitySet Name="AuthorityOu" EntityType="OAModel.AuthorityOu" />
+          <EntitySet Name="AuthorityOuUser" EntityType="OAModel.AuthorityOuUser" />
+          <AssociationSet Name="FK_AuthorityOuUser_AuthorityOu" Association="OAModel.FK_AuthorityOuUser_AuthorityOu">
+            <End Role="AuthorityOu" EntitySet="AuthorityOu" />
+            <End Role="AuthorityOuUser" EntitySet="AuthorityOuUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorityOuUser_AuthorityUser" Association="OAModel.FK_AuthorityOuUser_AuthorityUser">
+            <End Role="AuthorityUser" EntitySet="AuthorityUser" />
+            <End Role="AuthorityOuUser" EntitySet="AuthorityOuUser" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AuthorityOu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AuthorityOuUser" Relationship="OAModel.FK_AuthorityOuUser_AuthorityOu" FromRole="AuthorityOu" ToRole="AuthorityOuUser" />
+        </EntityType>
+        <EntityType Name="AuthorityOuUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OuId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AuthorityOu" Relationship="OAModel.FK_AuthorityOuUser_AuthorityOu" FromRole="AuthorityOuUser" ToRole="AuthorityOu" />
+          <NavigationProperty Name="AuthorityUser" Relationship="OAModel.FK_AuthorityOuUser_AuthorityUser" FromRole="AuthorityOuUser" ToRole="AuthorityUser" />
+        </EntityType>
+        <Association Name="FK_AuthorityOuUser_AuthorityOu">
+          <End Type="OAModel.AuthorityOu" Role="AuthorityOu" Multiplicity="1" />
+          <End Type="OAModel.AuthorityOuUser" Role="AuthorityOuUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthorityOu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthorityOuUser">
+              <PropertyRef Name="OuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorityOuUser_AuthorityUser">
+          <End Type="OAModel.AuthorityUser" Role="AuthorityUser" Multiplicity="1" />
+          <End Type="OAModel.AuthorityOuUser" Role="AuthorityOuUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthorityUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthorityOuUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -61,6 +173,28 @@
                 <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorityOu">
+            <EntityTypeMapping TypeName="OAModel.AuthorityOu">
+              <MappingFragment StoreEntitySet="AuthorityOu">
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Pid" ColumnName="Pid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorityOuUser">
+            <EntityTypeMapping TypeName="OAModel.AuthorityOuUser">
+              <MappingFragment StoreEntitySet="AuthorityOuUser">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OuId" ColumnName="OuId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
