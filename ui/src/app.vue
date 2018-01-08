@@ -1,8 +1,10 @@
 <template>
   <div class="hello">
     <p v-for="user in users" :key="user.Id">
-      {{ user.Name }}
+      {{ user.Name }}:{{ user }}
     </p>
+    <el-radio v-model="radio" label="1">备选项</el-radio>
+    <el-radio v-model="radio" label="2">备选项</el-radio>
   </div>
 </template>
 <script>
