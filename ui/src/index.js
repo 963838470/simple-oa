@@ -1,14 +1,11 @@
 import _ from 'lodash';
 import Icon from './icon.png';
 import Vue from 'vue';
+import App from './app.vue';
+require("./style/style.css")
+
 import Vuex from 'vuex'
-
-import App from './views/app.vue';
-import { debug } from 'util';
-require("./style.css")
-
 Vue.use(Vuex)
-
 const store = new Vuex.Store({
     state: {
         count: 0,
@@ -31,9 +28,37 @@ const store = new Vuex.Store({
         }
     }
 })
-store.commit('addCount',1)
+store.commit('addCount', 1)
 store.state.count += 1;
-console.log(store.state.count)
+// computed: {
+//     count() {
+//       return this.$store.state.count;
+//     },
+//     user() {
+//       return this.$store.getters.getuser(1);
+//     }
+//   },
+//   methods: {
+//     btnClick() {
+//       this.$store.commit("addCount", 10);
+//     }
+//   },
+
+import Axios from 'axios'
+Vue.prototype.$ajax = Axios;
+Axios.defaults.baseURL = 'http://localhost:8888/api';
+Axios.interceptors.request.use(function (config) {
+    // Mint.Indicator.open({
+    //     text: '加载中...',
+    //     spinnerType: 'fading-circle'
+    // });
+    // config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    return config;
+})
+Axios.interceptors.response.use(function (config) {
+    // Mint.Indicator.close();
+    return config;
+})
 
 const app = new Vue({
     el: '#app',
