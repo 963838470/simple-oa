@@ -5,6 +5,7 @@
     </p>
     <el-radio v-model="radio" label="1">备选项</el-radio>
     <el-radio v-model="radio" label="2">备选项</el-radio>
+    <el-button>Let's do it</el-button>
   </div>
 </template>
 <script>
@@ -12,7 +13,8 @@ import topHeader from "./components/header.vue";
 export default {
   data: function() {
     return {
-      users: []
+      users: [],
+      radio: 1
     };
   },
   created() {
