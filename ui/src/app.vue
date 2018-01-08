@@ -1,50 +1,66 @@
 <template>
-  <div class="hello">
-    <p v-for="user in users" :key="user.Id">
-      {{ user.Name }}:{{ user }}
-    </p>
-    <el-radio v-model="radio" label="1">备选项</el-radio>
-    <el-radio v-model="radio" label="2">备选项</el-radio>
-    <el-button>Let's do it</el-button>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
+
 <script>
-import topHeader from "./components/header.vue";
 export default {
-  data: function() {
-    return {
-      users: [],
-      radio: 1
-    };
-  },
-  created() {
-    this.$ajax.get("user").then(res => {
-      console.log(res.data);
-      this.users = res.data;
-    });
-  },
-  computed: {
-    count() {
-      return this.$store.state.count;
-    },
-    user() {
-      return this.$store.getters.getuser(1);
-    }
-  },
-  methods: {
-    btnClick() {
-      this.$store.commit("addCount", 10);
-    }
-  },
-  components: {
-    topHeader
-  }
+  name: "hello",
+  components: {}
 };
 </script>
+
 <style>
-:fullscreen a {
-  display: flex;
+html,
+body,
+* {
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+  resize: none !important;
+}
+
+.toolbar {
+  background: #f2f2f2;
+  padding: 10px 0px 10px 10px;
+  margin: 10px 0px;
+  height: 55px;
+  text-align: left;
+}
+
+th {
+  text-align: center !important;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+#app {
+  font-family: "微软雅黑";
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* 重写uielement样式 */
+.cell {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.el-select {
+  width: 100%;
 }
 </style>
-
-

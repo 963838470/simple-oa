@@ -1,29 +1,34 @@
 <template>
-  <div>
-    自组件count:{{count}}
-    <button type="button" @click="btnClick">子组件点击增加</button>
+  <div class="header">
+    <h1><router-link to="/">{{ name }}</router-link></h1>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-export default {
-  data: function() {
-    return {};
-  },
-  computed: {
-    count() {
-      return this.$store.state.count;
-    }
-  },
-  methods: {
-    btnClick() {
-      this.$store.commit("addCount", 1);
+  export default {
+    data () {
+      return {
+        name: 'EASY_OA系统'
+      }
     }
   }
-};
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .header {
+    background:#20a0ff;
+    line-height:60px;
+    height:60px;
+  }
 
+  h1 {
+    float:left;
+    margin-left:50px;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 </style>

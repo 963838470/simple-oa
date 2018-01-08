@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import Icon from './icon.png';
 import Vue from 'vue';
 import App from './app.vue';
 require("./style/style.css")
 
 import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-default/index.css'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
@@ -64,9 +64,13 @@ Axios.interceptors.response.use(function (config) {
     return config;
 })
 
+import router from './route.js'
+
+import Home from './components/Home.vue';
 const app = new Vue({
     el: '#app',
     store,
+    router,
     render: h => h(App)
 });
 
