@@ -21,10 +21,10 @@
       <el-table-column prop="Name" label="机构名称" width="200"></el-table-column>
       <el-table-column prop="Address" label="机构地址" width="250"></el-table-column>
       <el-table-column prop="Description" label="描述"></el-table-column>
-      <el-table-column label="操作" width="140">
+      <el-table-column label="操作" width="160">
         <template slot-scope="scope">
-          <el-button size="small" @click="edit(scope.$index)">编辑</el-button>
-          <el-button type="danger" size="small" @click="del(scope.$index)">删除</el-button>
+          <el-button size="mini" @click="edit(scope.$index)">编辑</el-button>
+          <el-button size="mini" @click="del(scope.$index)" type="danger">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,24 +35,21 @@
     </el-col>
 
     <!-- 新增、编辑界面 -->
-    <el-dialog :title="editTitle" v-model="editVisible" :close-on-click-modal="false">
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
-        <el-form-item label="机构名称" prop="name">
-          <el-input v-model="editData.name" auto-complete="off"></el-input>
+        <el-form-item label="机构名称" prop="Name">
+          <el-input v-model="editData.Name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="机构简称" prop="simpleName">
-          <el-input v-model="editData.simpleName" auto-complete="off"></el-input>
+        <el-form-item label="机构地址" prop="Address">
+          <el-input v-model="editData.Address" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="负责人" prop="leader">
-          <el-input v-model="editData.leader" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="机构简介" prop="summary">
-          <el-input v-model="editData.summary" auto-complete="off" type="textarea" autosize></el-input>
+        <el-form-item label="描述" prop="Description">
+          <el-input v-model="editData.Description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addCancer">取消</el-button>
-        <el-button type="primary" @click="addConfirm">提交</el-button>
+        <el-button @click="editCancer">取消</el-button>
+        <el-button type="primary" @click="editConfirm">提交</el-button>
       </div>
     </el-dialog>
   </section>
@@ -76,16 +73,10 @@ export default {
       page: 1,
       listLoading: false,
       sels: [], //列表选中列
-
-      // 新增
+      // 编辑
       editTitle: "",
       editVisible: false,
-      editData: {
-        name: "",
-        simpleName: "",
-        leader: "",
-        summary: ""
-      },
+      editData: {},
       editRule: {
         name: [
           { required: true, message: "请输入机构名称", trigger: ["blur", "change"] }
@@ -110,16 +101,20 @@ export default {
       //   return data.name.indexOf(this.filters.name) > -1;
       // });
     },
-    // 新增
-    add: function() {
-      // this.editTitle = "新增机构";
-      // this.editVisible = true;
-      // this.editData = {
-      //   id: commom.getRandom(),
-      //   name: ""
-      // };
+    // 新增、编辑
+    add() {
+      this.editTitle = "新增机构";
+      this.editVisible = true;
+      this.editData = {};
     },
-    addConfirm: function() {
+    edit(index) {
+      this.editData = this.ous[index];
+      this.editData.index = index;
+
+      this.editTitle = "编辑机构";
+      this.editVisible = true;
+    },
+    editConfirm() {
       // var isValid = false;
       // this.$refs["editData"].validate(function(valid) {
       //   // 表单校验
@@ -148,17 +143,19 @@ export default {
       //     }
       //   }
       // }
-    },
-    addCancer: function() {
-      this.editVisible = false;
-    },
-    // 编辑
-    edit(index) {
-      this.editData = this.ous[index];
-      this.editData.index = index;
+      //debugger;
+      this.$ajax.post("ou", { data: this.editData }).then(res => {
+        this.ous.push(res.data);
+      });
 
-      this.editTitle = "编辑机构";
-      this.editVisible = true;
+      // this.$ajax({
+      //   url: "ou",
+      //   method: "post",
+      //   data: this.editData
+      // });
+    },
+    editCancer: function() {
+      this.editVisible = false;
     },
     // 删除
     del(index) {
@@ -184,7 +181,6 @@ export default {
   mounted() {
     this.$ajax.get("ou").then(res => {
       this.ous = res.data;
-      console.log(this.ous)
     });
   }
 };
