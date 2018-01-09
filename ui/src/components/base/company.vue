@@ -179,8 +179,19 @@ export default {
     }
   },
   mounted() {
-    this.$ajax.get("ou").then(res => {
-      this.ous = res.data;
+    // this.$ajax.get("ou").then(res => {
+    //   this.ous = res.data;
+    // });
+    this.$ajax.post("ou", {
+      Id: 0,
+      Pid: 0,
+      Name: "string",
+      Address: "string",
+      Description: "string",
+      Picture: "string",
+      Path: "string"
+    }).then(res => {
+      console.log(res.data);
     });
   }
 };

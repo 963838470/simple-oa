@@ -13,7 +13,7 @@ Vue.use(ElementUI)
 import Axios from 'axios'
 Vue.prototype.$ajax = Axios;
 Axios.defaults.baseURL = 'http://localhost:8888/api';
-Axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
+//Axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 Axios.interceptors.request.use(function (config) {
     // Mint.Indicator.open({
     //     text: '加载中...',
