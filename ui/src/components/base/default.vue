@@ -2,15 +2,16 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <!-- 公告 -->
+        <!-- 通知 -->
         <el-card class="notice">
           <div slot="header" class="clearfix">
-            <h3>公告</h3>
+            <h3>通知</h3>
+            <h4>更多>></h4>
           </div>
           <ul>
-            <li v-for="n in notice" :key="n">
+            <li v-for="n in notice" :key="n.id">
               <a href="javascript:void(0)" @click="showNoticeDetail(n)">{{ n.title }}</a>
-              <div style="float:right">{{ n.createTime | date('yyyy-MM-dd') }}</div>
+              <div style="float:right">{{ n.createTime | date }}</div>
             </li>
           </ul>
         </el-card>
@@ -20,7 +21,7 @@
         </div>
       </el-col>
     </el-row>
-
+    <!-- 通知详情 -->
     <el-dialog title="通知详情" :visible.sync="isShowNoticeDetail" :before-close="hideNoticeDetail">
       <el-form ref="form" :model="currentNote" label-width="80px">
         <el-form-item label="标题">
@@ -44,8 +45,7 @@
 </template>
 
 <script>
-import commom from "../commom/commom.js";
-
+import data from "../../commom/data.js";
 export default {
   data() {
     return {
@@ -64,16 +64,22 @@ export default {
     }
   },
   mounted() {
-    //this.notice = data.notice;
+    this.notice = data.notice;
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .notice {
   text-align: left;
   margin-top: 10px;
+}
+h3 {
+  float: left;
+}
+
+h4 {
+  float: right;
 }
 
 .notice ul {

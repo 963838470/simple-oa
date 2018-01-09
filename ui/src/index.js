@@ -28,6 +28,7 @@ Axios.interceptors.response.use(function (config) {
 
 import router from './route.js'
 import store from './store.js'
+import filter from './filter.js'
 
 const app = new Vue({
     el: '#app',

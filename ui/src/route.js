@@ -22,7 +22,7 @@ export default new Router({
         { path: '/department', name: '部门管理', component: resolve => require(['./components/base/department.vue'], resolve) },
         { path: '/user', name: '人员管理', component: resolve => require(['./components/base/user.vue'], resolve) },
         { path: '/project', name: '项目管理', component: resolve => require(['./components/base/project.vue'], resolve) },
-        { path: '/default', name: '首页', component: resolve => require(['./components/default.vue'], resolve), alias: '/', hidden: true },
+        { path: '/default', name: '首页', component: resolve => require(['./components/base/default.vue'], resolve), alias: '/', hidden: true },
       ]
     },
     {

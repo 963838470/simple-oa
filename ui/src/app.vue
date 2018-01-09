@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
     this.$ajax.get("user").then(res => {
       var users = res.data;
       if (users.length > 0) {
@@ -14,9 +14,9 @@ export default {
       }
     });
     this.$ajax.get("ou").then(res => {
-      var ou = res.data;
-      if (ou.length > 0) {
-        this.$store.commit("setOu", ou[0]);
+      var ous = res.data;
+      if (ous.length > 0) {
+        this.$store.commit("setOu", ous[0]);
       }
     });
   }
