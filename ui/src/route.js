@@ -7,22 +7,22 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/Login',
-      component: require('./components/Login.vue'),
+      path: '/login',
+      component: require('./components/login.vue'),
       hidden: true
     },
     {
       path: '/',
       name: '基础管理',
-      alias: '/Default',
-      component: resolve => require(["./components/Home.vue"], resolve),
+      alias: '/default',
+      component: resolve => require(["./components/homePage.vue"], resolve),
       iconCls: 'el-icon-message',
       children: [
-        { path: '/Company', name: '公司管理', component: resolve => require(['./components/base/Company.vue'], resolve) },
-        { path: '/Department', name: '部门管理', component: resolve => require(['./components/base/Department.vue'], resolve) },
-        { path: '/User', name: '人员管理', component: resolve => require(['./components/base/User.vue'], resolve) },
-        { path: '/Project', name: '项目管理', component: resolve => require(['./components/base/Project.vue'], resolve) },
-        { path: '/Default', name: '首页', component: resolve => require(['./components/Default.vue'], resolve), alias: '/', hidden: true },
+        { path: '/company', name: '公司管理', component: resolve => require(['./components/base/company.vue'], resolve) },
+        { path: '/department', name: '部门管理', component: resolve => require(['./components/base/department.vue'], resolve) },
+        { path: '/user', name: '人员管理', component: resolve => require(['./components/base/user.vue'], resolve) },
+        { path: '/project', name: '项目管理', component: resolve => require(['./components/base/project.vue'], resolve) },
+        { path: '/default', name: '首页', component: resolve => require(['./components/default.vue'], resolve), alias: '/', hidden: true },
       ]
     },
     {

@@ -1,52 +1,14 @@
 import _ from 'lodash';
 import Vue from 'vue';
 import App from './app.vue';
-require("./style/style.css")
+require("./style/common.css")
 
 import ElementUI from 'element-ui'
 // import 'element-ui/lib/theme-default/index.css'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
-import Vuex from 'vuex'
-Vue.use(Vuex)
-const store = new Vuex.Store({
-    state: {
-        count: 0,
-        users: [
-            { id: 1, name: '衣衣' },
-            { id: 2, name: '二哈' },
-            { id: 3, name: '张三' },
-            { id: 4, name: '李四' },
-            { id: 5, name: '王五' },
-        ]
-    },
-    getters: {
-        getuser: state => (id) => {
-            return state.users.filter(o => o.id == id)
-        }
-    },
-    mutations: {
-        addCount(state, n) {
-            state.count += n;
-        }
-    }
-})
-store.commit('addCount', 1)
-store.state.count += 1;
-// computed: {
-//     count() {
-//       return this.$store.state.count;
-//     },
-//     user() {
-//       return this.$store.getters.getuser(1);
-//     }
-//   },
-//   methods: {
-//     btnClick() {
-//       this.$store.commit("addCount", 10);
-//     }
-//   },
+
 
 import Axios from 'axios'
 Vue.prototype.$ajax = Axios;
@@ -65,8 +27,8 @@ Axios.interceptors.response.use(function (config) {
 })
 
 import router from './route.js'
+import store from './store.js'
 
-import Home from './components/Home.vue';
 const app = new Vue({
     el: '#app',
     store,

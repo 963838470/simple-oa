@@ -6,61 +6,23 @@
 
 <script>
 export default {
-  name: "hello",
-  components: {}
+  created() {
+    this.$ajax.get("user").then(res => {
+      var users = res.data;
+      if (users.length > 0) {
+        this.$store.commit("setUser", users[0]);
+      }
+    });
+    this.$ajax.get("ou").then(res => {
+      var ou = res.data;
+      if (ou.length > 0) {
+        this.$store.commit("setOu", ou[0]);
+      }
+    });
+  }
 };
 </script>
 
 <style>
-html,
-body,
-* {
-  padding: 0;
-  margin: 0;
-}
 
-textarea {
-  resize: none !important;
-}
-
-.toolbar {
-  background: #f2f2f2;
-  padding: 10px 0px 10px 10px;
-  margin: 10px 0px;
-  height: 55px;
-  text-align: left;
-}
-
-th {
-  text-align: center !important;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-#app {
-  font-family: "微软雅黑";
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-/* 重写uielement样式 */
-.cell {
-  padding-left: 8px !important;
-  padding-right: 8px !important;
-}
-
-.el-select {
-  width: 100%;
-}
 </style>

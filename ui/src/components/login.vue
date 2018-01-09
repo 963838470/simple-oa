@@ -1,17 +1,14 @@
 <template>
   <div>
-
+    登陆
   </div>
 </template>
 
 <script>
-  import data from '@/commom/data'
-  import commom from '@/commom/commom'
-
   export default {
     data () {
       return {
-
+        msg: 'Welcome to Your Vue.js App'
       }
     }
   }

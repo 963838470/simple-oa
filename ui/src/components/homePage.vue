@@ -22,7 +22,7 @@
 
 <script>
 import myHead from "./header.vue";
-import myMenu from "./Menu.vue";
+import myMenu from "./menu.vue";
 
 export default {
   data() {
@@ -35,7 +35,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .main {
   margin: 0 15px;
