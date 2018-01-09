@@ -18,15 +18,15 @@
     <el-table :data="ous" highlight-current-row v-loading="listLoading" stripe border fit @selection-change="select">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" label="序号" width="80"></el-table-column>
-      <el-table-column prop="Name" label="机构名称" width="200"></el-table-column>
-      <el-table-column prop="Address" label="机构地址" width="250"></el-table-column>
-      <el-table-column prop="Description" label="描述"></el-table-column>
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-button size="mini" @click="edit(scope.$index)">编辑</el-button>
           <el-button size="mini" @click="del(scope.$index)" type="danger">删除</el-button>
         </template>
       </el-table-column>
+      <el-table-column prop="Name" label="机构名称" width="200"></el-table-column>
+      <el-table-column prop="Address" label="机构地址" width="250"></el-table-column>
+      <el-table-column prop="Description" label="描述"></el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
@@ -144,15 +144,10 @@ export default {
       //   }
       // }
       //debugger;
-      this.$ajax.post("ou", { data: this.editData }).then(res => {
+      this.$ajax.post("ou", this.editData).then(res => {
+        this.editVisible = false;
         this.ous.push(res.data);
       });
-
-      // this.$ajax({
-      //   url: "ou",
-      //   method: "post",
-      //   data: this.editData
-      // });
     },
     editCancer: function() {
       this.editVisible = false;
@@ -178,20 +173,9 @@ export default {
       commom.success("批量删除成功！");
     }
   },
-  mounted() {
-    // this.$ajax.get("ou").then(res => {
-    //   this.ous = res.data;
-    // });
-    this.$ajax.post("ou", {
-      Id: 0,
-      Pid: 0,
-      Name: "string",
-      Address: "string",
-      Description: "string",
-      Picture: "string",
-      Path: "string"
-    }).then(res => {
-      console.log(res.data);
+  created() {
+    this.$ajax.get("ou").then(res => {
+      this.ous = res.data;
     });
   }
 };
