@@ -8,7 +8,7 @@
             <h3>公告</h3>
           </div>
           <ul>
-            <li v-for="n in notice" :keys="n">
+            <li v-for="n in notice" :key="n">
               <a href="javascript:void(0)" @click="showNoticeDetail(n)">{{ n.title }}</a>
               <div style="float:right">{{ n.createTime | date('yyyy-MM-dd') }}</div>
             </li>
@@ -64,7 +64,7 @@ export default {
     }
   },
   mounted() {
-    this.notice = data.notice;
+    //this.notice = data.notice;
   }
 };
 </script>

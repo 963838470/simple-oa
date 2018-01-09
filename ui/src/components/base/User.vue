@@ -28,7 +28,7 @@
         <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column label="操作" width="140">
-          <template scope="scope">
+          <template slot-scope="scope">
             <el-button size="small" @click="edit(scope.$index)">编辑</el-button>
             <el-button type="danger" size="small" @click="del(scope.$index)">删除</el-button>
           </template>
