@@ -7,10 +7,10 @@
           <el-input v-model="filters.name" placeholder="机构名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="queryClick">查询</el-button>
+          <el-button type="primary" @click="queryClick" size="medium">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="add">新增</el-button>
+          <el-button type="primary" @click="add" size="medium">新增</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -30,7 +30,7 @@
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0">批量删除</el-button>
+      <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0" size="medium">批量删除</el-button>
       <el-pagination layout="prev, pager, next" :page-size="20" @current-change="pageIndexChange" :total="ous.length" style="float:right;"></el-pagination>
     </el-col>
 
@@ -78,11 +78,8 @@ export default {
       editVisible: false,
       editData: {},
       editRule: {
-        name: [
+        Name: [
           { required: true, message: "请输入机构名称", trigger: ["blur", "change"] }
-        ],
-        leader: [
-          { required: true, message: "请输入负责人", trigger: ["blur", "change"] }
         ]
       }
     };
@@ -115,39 +112,34 @@ export default {
       this.editVisible = true;
     },
     editConfirm() {
-      // var isValid = false;
-      // this.$refs["editData"].validate(function(valid) {
-      //   // 表单校验
-      //   if (valid) {
-      //     isValid = true;
-      //   }
-      // });
-      // if (isValid) {
-      //   if (this.editData.index != null && this.editData.index >= 0) {
-      //     // 编辑
-      //     if (this.editData.name.indexOf(this.ou) == -1) {
-      //       this.ou[this.editData.index] = this.editData;
-      //       commom.success("修改成功！");
-      //       this.editVisible = false;
-      //     } else {
-      //       commom.error("不能重复添加！");
-      //     }
-      //   } else {
-      //     // 新增
-      //     if (this.editData.name.indexOf(this.ou) == -1) {
-      //       this.ou.push(this.editData);
-      //       commom.success("添加成功！");
-      //       this.editVisible = false;
-      //     } else {
-      //       commom.error("不能重复添加！");
-      //     }
-      //   }
-      // }
-      //debugger;
-      this.$ajax.post("ou", this.editData).then(res => {
-        this.editVisible = false;
-        this.ous.push(res.data);
+      var isValid = false;
+      this.$refs["editData"].validate(function(valid) {
+        // 表单校验
+        if (valid) {
+          isValid = true;
+        }
       });
+      if (isValid) {
+        if (this.editData.ID != null) {
+          // 编辑
+          this.$ajax.post("ou", this.editData).then(res => {
+            this.editVisible = false;
+            this.ous.push(res.data);
+          });
+          commom.success("修改成功！");
+          this.editVisible = false;
+          // commom.error("不能重复添加！");
+        } else {
+          // 新增
+          this.$ajax.post("ou", this.editData).then(res => {
+            this.editVisible = false;
+            this.ous.push(res.data);
+          });
+          commom.success("添加成功！");
+          this.editVisible = false;
+          // commom.error("不能重复添加！");
+        }
+      }
     },
     editCancer: function() {
       this.editVisible = false;

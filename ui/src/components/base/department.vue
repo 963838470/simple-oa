@@ -37,7 +37,7 @@
 
     <!-- 新增、编辑界面 -->
     <div>
-      <el-dialog :title="editTitle" v-model="editVisible" :close-on-click-modal="false">
+      <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
         <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
           <el-form-item label="名称" prop="name">
             <el-input v-model="editData.name" auto-complete="off"></el-input>
