@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6">
         <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
-        <el-tree class="filter-tree" :data="ous" :props="defaultProps" default-expand-all :filter-node-method="filterNode" ref="tree2">
+        <el-tree class="filter-tree" :data="ous" ref="ouTree" highlight-current @node-click="handleNodeClick" :filter-node-method="filterNode">
         </el-tree>
       </el-col>
       <el-col :span="18">
@@ -19,26 +19,27 @@ export default {
     return {
       filterText: "",
       ous: [],
-      defaultProps: {
-        children: "children",
-        label: "label"
-      }
+      checkedOu: {}
     };
   },
   watch: {
     filterText(val) {
-      this.$refs.tree2.filter(val);
+      this.$refs.ouTree.filter(val);
     }
   },
   methods: {
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
+    },
+    handleNodeClick(data) {
+      console.log(data);
     }
   },
   created() {
     this.$ajax.get("ou").then(res => {
       this.ous = res.data;
+      this.checkedOu = res.data[0];
     });
   }
 };
