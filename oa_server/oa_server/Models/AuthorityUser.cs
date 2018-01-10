@@ -15,22 +15,28 @@ namespace oa_server.Models
     public partial class AuthorityUser
     {
       
-        public int Id { get; set; }
+        public int id { get; set; }
       
-        public string Name { get; set; }
+        public string name { get; set; }
       
-        public string LoginName { get; set; }
+        public string loginName { get; set; }
       
-        public string Password { get; set; }
+        public string password { get; set; }
       
-        public string Email { get; set; }
+        public string email { get; set; }
       
-        public string Phone { get; set; }
+        public string phone { get; set; }
       
-        public bool IsDisable { get; set; }
+        public bool isDisable { get; set; }
       
-        public string Address { get; set; }
+        public string address { get; set; }
       
-        public string Remark { get; set; }
+        public string remark { get; set; }
+      
+        public string picture { get; set; }
+      
+        public bool isDelete { get; set; }
+      
+        public System.DateTime createTime { get; set; }
     }
 }

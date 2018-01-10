@@ -15,18 +15,20 @@ namespace oa_server.Models
     public partial class AuthorityOu
     {
       
-        public int Id { get; set; }
+        public int id { get; set; }
       
-        public int Pid { get; set; }
+        public int pid { get; set; }
       
-        public string Name { get; set; }
+        public string name { get; set; }
       
-        public string Address { get; set; }
+        public string address { get; set; }
       
-        public string Description { get; set; }
+        public string description { get; set; }
       
-        public string Picture { get; set; }
+        public string path { get; set; }
       
-        public string Path { get; set; }
+        public System.DateTime createTime { get; set; }
+      
+        public bool isDelete { get; set; }
     }
 }

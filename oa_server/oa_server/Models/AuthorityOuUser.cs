@@ -15,10 +15,10 @@ namespace oa_server.Models
     public partial class AuthorityOuUser
     {
       
-        public int Id { get; set; }
+        public int id { get; set; }
       
-        public int OuId { get; set; }
+        public int ouId { get; set; }
       
-        public int UserId { get; set; }
+        public int userId { get; set; }
     }
 }

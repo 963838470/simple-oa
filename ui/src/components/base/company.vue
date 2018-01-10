@@ -119,7 +119,6 @@ export default {
     editConfirm() {
       this.$refs["editData"].validate(valid => {
         if (valid) {
-debugger;
           if (this.editData.ID != null) {
             // 编辑
             this.$ajax.put("ou", this.editData).then(res => {
