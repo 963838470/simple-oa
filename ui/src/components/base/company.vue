@@ -78,9 +78,10 @@ export default {
       editVisible: false,
       editData: {},
       editRule: {
-        Name: [
-          { required: true, message: "请输入机构名称", trigger: ["blur", "change"] }
-        ]
+        Name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        Address: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        Description: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        
       }
     };
   },
@@ -102,7 +103,11 @@ export default {
     add() {
       this.editTitle = "新增机构";
       this.editVisible = true;
-      this.editData = {};
+      this.editData = {
+        Name: "",
+        Address: "",
+        Description: ""
+      };
     },
     edit(index) {
       this.editData = this.ous[index];
@@ -112,34 +117,31 @@ export default {
       this.editVisible = true;
     },
     editConfirm() {
-      var isValid = false;
-      this.$refs["editData"].validate(function(valid) {
-        // 表单校验
+      this.$refs["editData"].validate(valid => {
         if (valid) {
-          isValid = true;
+debugger;
+          if (this.editData.ID != null) {
+            // 编辑
+            this.$ajax.put("ou", this.editData).then(res => {
+              
+              console.log(res.data);
+              this.editVisible = false;
+            });
+            commom.success("修改成功！");
+            this.editVisible = false;
+            // commom.error("不能重复添加！");
+          } else {
+            // 新增
+            this.$ajax.post("ou", this.editData).then(res => {
+              this.editVisible = false;
+              this.ous.push(res.data);
+            });
+            commom.success("添加成功！");
+            this.editVisible = false;
+            // commom.error("不能重复添加！");
+          }
         }
       });
-      if (isValid) {
-        if (this.editData.ID != null) {
-          // 编辑
-          this.$ajax.post("ou", this.editData).then(res => {
-            this.editVisible = false;
-            this.ous.push(res.data);
-          });
-          commom.success("修改成功！");
-          this.editVisible = false;
-          // commom.error("不能重复添加！");
-        } else {
-          // 新增
-          this.$ajax.post("ou", this.editData).then(res => {
-            this.editVisible = false;
-            this.ous.push(res.data);
-          });
-          commom.success("添加成功！");
-          this.editVisible = false;
-          // commom.error("不能重复添加！");
-        }
-      }
     },
     editCancer: function() {
       this.editVisible = false;
