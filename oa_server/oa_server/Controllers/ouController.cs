@@ -35,16 +35,16 @@ namespace oa_server.Controllers
             {
                 TreeData tree = new TreeData();
                 tree.id = item.id;
-                tree.label = string.IsNullOrWhiteSpace(item.name) ? "" : item.name;
+                tree.label = item.name;
                 trees.Add(tree);
 
                 List<AuthorityOu> childOu = ous.FindAll(n => n.pid == item.id);
-                List<TreeData> childrenTree = new List<TreeData>();
                 if (childOu.Count > 0)
                 {
+                    List<TreeData> childrenTree = new List<TreeData>();
                     BuildTree(childrenTree, ous, item.id);
+                    tree.children = childrenTree;
                 }
-                tree.children = childrenTree;
             }
             return trees;
         }
