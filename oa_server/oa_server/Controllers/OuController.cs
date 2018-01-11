@@ -36,6 +36,13 @@ namespace oa_server.Controllers
                 TreeData tree = new TreeData();
                 tree.id = item.id;
                 tree.label = item.name;
+                tree.address = item.address;
+                tree.createTime = item.createTime;
+                tree.description = item.description;
+                tree.name = item.name;
+                tree.path = item.path;
+                tree.pid = item.pid;
+
                 trees.Add(tree);
 
                 List<AuthorityOu> childOu = ous.FindAll(n => n.pid == item.id);

@@ -5,11 +5,8 @@ using System.Web;
 
 namespace oa_server.Models
 {
-    public class TreeData
+    public class TreeData : AuthorityOu
     {
-
-        public int id { get; set; }
-
         public string label { get; set; }
 
         public List<TreeData> children { get; set; }

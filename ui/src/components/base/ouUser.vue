@@ -61,18 +61,19 @@ export default {
             "span",
             {
               attrs: {
-                style: "float: right; margin-right: 20px"
+                class: "ou_icons"
               }
             },
             [
               createElement("i", {
                 attrs: {
-                  class: "el-icon-edit"
+                  class: "el-icon-plus",
+                  title: "新增"
                 },
                 on: {
                   click: function() {
                     console.info("点击了节点" + data.id + "的添加按钮");
-                    console.log(data)
+                    console.log(data);
                     store.append(
                       { id: self.baseId++, label: "testtest", children: [] },
                       data
@@ -80,40 +81,38 @@ export default {
                   }
                 }
               }),
-              //              <i class="el-icon-edit"></i>
-              createElement(
-                "el-button",
-                {
-                  attrs: {
-                    size: "mini"
-                  },
-                  on: {
-                    click: function() {
-                      console.info("点击了节点" + data.id + "的添加按钮");
-                      store.append(
-                        { id: self.baseId++, label: "testtest", children: [] },
-                        data
-                      );
-                    }
-                  }
+              createElement("i", {
+                attrs: {
+                  class: "el-icon-edit",
+                  title: "编辑"
                 },
-                "添加"
-              ),
-              createElement(
-                "el-button",
-                {
-                  attrs: {
-                    size: "mini"
-                  },
-                  on: {
-                    click: function() {
-                      console.info("点击了节点" + data.id + "的删除按钮");
-                      store.remove(data);
-                    }
+                on: {
+                  click: function() {
+                    console.info("点击了节点" + data.id + "的添加按钮");
+                    console.log(data);
+                    store.append(
+                      { id: self.baseId++, label: "testtest", children: [] },
+                      data
+                    );
                   }
+                }
+              }),
+              createElement("i", {
+                attrs: {
+                  class: "el-icon-delete",
+                  title: "删除"
                 },
-                "删除"
-              )
+                on: {
+                  click: function() {
+                    console.info("点击了节点" + data.id + "的添加按钮");
+                    console.log(data);
+                    store.append(
+                      { id: self.baseId++, label: "testtest", children: [] },
+                      data
+                    );
+                  }
+                }
+              })
             ]
           )
         ]
@@ -129,6 +128,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.ou_icons {
+  float: right;
+}
 
+.ou_icons i {
+  margin-right: 10px;
+}
 </style>
