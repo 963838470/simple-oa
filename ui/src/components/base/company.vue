@@ -79,9 +79,8 @@ export default {
       editData: {},
       editRule: {
         Name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
-        Address: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        Address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
         Description: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
-        
       }
     };
   },

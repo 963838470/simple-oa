@@ -10,16 +10,47 @@
         <div class="grid-content bg-purple-light"></div>
       </el-col>
     </el-row>
+
+    <!-- 新增、编辑机构界面 -->
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
+      <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
+        <el-form-item label="机构名称" prop="Name">
+          <el-input v-model="editData.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="机构地址" prop="address">
+          <el-input v-model="editData.address" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" prop="description">
+          <el-input v-model="editData.description" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editCancer">取消</el-button>
+        <el-button type="primary" @click="editConfirm">提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import commom from "../../commom/commom.js";
 export default {
   data() {
     return {
       filterText: "",
       ous: [],
-      checkedOu: {}
+      checkedOu: {},
+      // 编辑
+      editTitle: "",
+      editVisible: false,
+      editData: {},
+      editRule: {
+        name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
+        description: [
+          { required: false, message: "请输入机构名称", trigger: ["blur"] }
+        ]
+      }
     };
   },
   watch: {
@@ -34,6 +65,15 @@ export default {
     },
     handleNodeClick(data) {
       console.log(data);
+    },
+    initOu() {
+      this.$ajax.get("ou").then(res => {
+        console.log("initOu");
+        console.log(res.data);
+        this.ous = [];
+        this.ous = res.data;
+        this.checkedOu = res.data[0];
+      });
     },
     rightClick(data) {
       console.log(data);
@@ -72,12 +112,10 @@ export default {
                 },
                 on: {
                   click: function() {
-                    console.info("点击了节点" + data.id + "的添加按钮");
-                    console.log(data);
-                    store.append(
-                      { id: self.baseId++, label: "testtest", children: [] },
-                      data
-                    );
+                    self.editTitle = "新增机构";
+                    self.editVisible = true;
+                    self.editData = {};
+                    return;
                   }
                 }
               }),
@@ -88,12 +126,10 @@ export default {
                 },
                 on: {
                   click: function() {
-                    console.info("点击了节点" + data.id + "的添加按钮");
-                    console.log(data);
-                    store.append(
-                      { id: self.baseId++, label: "testtest", children: [] },
-                      data
-                    );
+                    self.editTitle = "编辑机构";
+                    self.editVisible = true;
+                    self.editData = data;
+                    return;
                   }
                 }
               }),
@@ -104,12 +140,18 @@ export default {
                 },
                 on: {
                   click: function() {
-                    console.info("点击了节点" + data.id + "的添加按钮");
-                    console.log(data);
-                    store.append(
-                      { id: self.baseId++, label: "testtest", children: [] },
-                      data
-                    );
+                    self
+                      .$confirm("此操作将永久删除该机构, 是否继续?", "提示", {
+                        type: "warning"
+                      })
+                      .then(() => {
+                        self.$ajax.delete("ou/" + data.id).then(res => {
+                          self.initOu();
+                          store.remove(data);
+                          commom.success("删除成功！");
+                        });
+                      })
+                      .catch(() => {});
                   }
                 }
               })
@@ -117,13 +159,35 @@ export default {
           )
         ]
       );
+    },
+    editConfirm() {
+      var self = this;
+      this.$refs["editData"].validate(valid => {
+        if (valid) {
+          if (this.editData.id != null) {
+            // 编辑
+            this.$ajax.put("ou", this.editData).then(res => {
+              this.editVisible = false;
+              self.initOu();
+              commom.success("修改成功！");
+            });
+          } else {
+            // 新增
+            this.$ajax.post("ou", this.editData).then(res => {
+              this.editVisible = false;
+              self.initOu();
+              commom.success("添加成功！");
+            });
+          }
+        }
+      });
+    },
+    editCancer: function() {
+      this.editVisible = false;
     }
   },
   created() {
-    this.$ajax.get("ou").then(res => {
-      this.ous = res.data;
-      this.checkedOu = res.data[0];
-    });
+    this.initOu();
   }
 };
 </script>
