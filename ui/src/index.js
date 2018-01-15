@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Vue from 'vue';
 import App from './app.vue';
 require("./style/common.css")
+import common from './commom/commom.js'
 
 import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
@@ -20,9 +21,14 @@ Axios.interceptors.request.use(function (config) {
     });
     return config;
 })
-Axios.interceptors.response.use(function (config) {
+Axios.interceptors.response.use((response) => {
     loading.close();
-    return config;
+    return response;
+}, (error) => {
+    loading.close();
+    commom.error("出错了");
+    console.log(error);
+    return Promise.reject(error);
 })
 
 import router from './route.js'
