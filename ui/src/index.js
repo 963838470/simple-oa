@@ -24,12 +24,13 @@ Axios.interceptors.request.use(function (config) {
 Axios.interceptors.response.use((response) => {
     loading.close();
     return response;
-}, (error) => {
-    loading.close();
-    common.error("出错了");
-    console.log(error);
-    return Promise.reject(error);
-})
+}
+// , (error) => {
+//     loading.close();
+//     common.error("出错了");
+//     return Promise.reject(error);
+// }
+)
 
 import router from './route.js'
 import store from './store.js'

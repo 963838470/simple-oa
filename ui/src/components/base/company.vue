@@ -24,9 +24,9 @@
           <el-button size="mini" @click="del(scope.$index)" type="danger">删除</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="Name" label="机构名称" width="200"></el-table-column>
-      <el-table-column prop="Address" label="机构地址" width="250"></el-table-column>
-      <el-table-column prop="Description" label="描述"></el-table-column>
+      <el-table-column prop="name" label="机构名称" width="200"></el-table-column>
+      <el-table-column prop="address" label="机构地址" width="250"></el-table-column>
+      <el-table-column prop="description" label="描述"></el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
@@ -37,14 +37,14 @@
     <!-- 新增、编辑界面 -->
     <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
-        <el-form-item label="机构名称" prop="Name">
-          <el-input v-model="editData.Name" auto-complete="off"></el-input>
+        <el-form-item label="机构名称" prop="name">
+          <el-input v-model="editData.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="机构地址" prop="Address">
-          <el-input v-model="editData.Address" auto-complete="off"></el-input>
+        <el-form-item label="机构地址" prop="address">
+          <el-input v-model="editData.address" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="Description">
-          <el-input v-model="editData.Description" auto-complete="off"></el-input>
+        <el-form-item label="描述" prop="description">
+          <el-input v-model="editData.description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -78,14 +78,14 @@ export default {
       editVisible: false,
       editData: {},
       editRule: {
-        Name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
-        Address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
-        Description: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
+        address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
+        description: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }]
       }
     };
   },
   methods: {
-    select: function(selection) {
+    select(selection) {
       this.selIds = selection;
     },
     queryClick() {
@@ -103,9 +103,9 @@ export default {
       this.editTitle = "新增机构";
       this.editVisible = true;
       this.editData = {
-        Name: "",
-        Address: "",
-        Description: ""
+        name: "",
+        address: "",
+        description: ""
       };
     },
     edit(index) {
@@ -121,8 +121,6 @@ export default {
           if (this.editData.ID != null) {
             // 编辑
             this.$ajax.put("ou", this.editData).then(res => {
-              
-              console.log(res.data);
               this.editVisible = false;
             });
             common.success("修改成功！");

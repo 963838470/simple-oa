@@ -74,9 +74,7 @@ export default {
         this.checkedOu = res.data[0];
       });
     },
-    rightClick(data) {
-      console.log(data);
-    },
+    rightClick(data) {},
     renderContent: function(createElement, { node, data, store }) {
       var self = this;
       return createElement(
@@ -179,7 +177,7 @@ export default {
             });
           }
         } else {
-          common.success("失败");
+          common.success("表单校验不成功！");
         }
       });
     },
