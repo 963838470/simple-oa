@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Vue from 'vue';
 import App from './app.vue';
 require("./style/common.css")
-import common from './common/common.js'
+//import common from './common/common.js'
 
 import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'

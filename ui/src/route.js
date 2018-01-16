@@ -17,7 +17,7 @@ export default new Router({
       component: resolve => require(["./components/homePage.vue"], resolve),
       iconCls: 'el-icon-message',
       children: [
-        { path: '/ouuser', name: '机构人员', component: resolve => require(['./components/base/ouUser1.vue'], resolve) },
+        { path: '/ouuser', name: '机构人员', component: resolve => require(['./components/base/ouUser.vue'], resolve) },
         { path: '/company', name: '公司管理', component: resolve => require(['./components/base/company.vue'], resolve) },
         { path: '/department', name: '部门管理', component: resolve => require(['./components/base/department.vue'], resolve) },
         { path: '/user', name: '人员管理', component: resolve => require(['./components/base/user.vue'], resolve) },
