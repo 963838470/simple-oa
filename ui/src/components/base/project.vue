@@ -74,8 +74,8 @@
 </template>
 
 <script>
-  import data from '../../commom/data'
-  import commom from '../../commom/commom'
+  import data from '../../common/data'
+  import common from '../../common/common'
 	export default {
 		data() {
 			return {
@@ -159,18 +159,18 @@
           if(this.editData.index != null && this.editData.index >= 0) { // 编辑
             if(this.editData.name.indexOf(this.user) == -1) {
               this.user[this.editData.index] = this.editData;
-              commom.success("修改成功！");
+              common.success("修改成功！");
               this.editVisible = false;
             } else {
-              commom.error("不能重复添加！");
+              common.error("不能重复添加！");
             }
           } else { // 新增
             if(this.editData.name.indexOf(this.user) == -1) {
               this.user.push(this.editData);
-              commom.success("添加成功！");
+              common.success("添加成功！");
               this.editVisible = false;
             } else {
-              commom.error("不能重复添加！");
+              common.error("不能重复添加！");
             }
           }
         }
@@ -192,7 +192,7 @@
           type: 'warning'
         }).then(() => {
           this.user.splice(index,1);
-          commom.success("删除成功！");
+          common.success("删除成功！");
         }).catch(() => {
         });
       },
@@ -203,7 +203,7 @@
             this.user.splice(index,1);
           }
         }
-        commom.success("批量删除成功！");
+        common.success("批量删除成功！");
       }
 		},
 		mounted() {

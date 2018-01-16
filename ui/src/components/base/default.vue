@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import data from "../../commom/data.js";
+import data from "../../common/data.js";
 export default {
   data() {
     return {

@@ -14,7 +14,7 @@
     <!-- 新增、编辑机构界面 -->
     <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
-        <el-form-item label="机构名称" prop="Name">
+        <el-form-item label="机构名称" prop="name">
           <el-input v-model="editData.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="机构地址" prop="address">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import commom from "../../commom/commom.js";
+import common from "../../common/common.js";
 export default {
   data() {
     return {
@@ -43,7 +43,9 @@ export default {
       // 编辑
       editTitle: "",
       editVisible: false,
-      editData: {},
+      editData: {
+        name: null
+      },
       editRule: {
         name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
         address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
@@ -68,9 +70,6 @@ export default {
     },
     initOu() {
       this.$ajax.get("ou").then(res => {
-        console.log("initOu");
-        console.log(res.data);
-        this.ous = [];
         this.ous = res.data;
         this.checkedOu = res.data[0];
       });
@@ -148,7 +147,7 @@ export default {
                         self.$ajax.delete("ou/" + data.id).then(res => {
                           self.initOu();
                           store.remove(data);
-                          commom.success("删除成功！");
+                          common.success("删除成功！");
                         });
                       })
                       .catch(() => {});
@@ -169,16 +168,18 @@ export default {
             this.$ajax.put("ou", this.editData).then(res => {
               this.editVisible = false;
               self.initOu();
-              commom.success("修改成功！");
+              common.success("修改成功！");
             });
           } else {
             // 新增
             this.$ajax.post("ou", this.editData).then(res => {
               this.editVisible = false;
               self.initOu();
-              commom.success("添加成功！");
+              common.success("添加成功！");
             });
           }
+        } else {
+          common.success("失败");
         }
       });
     },

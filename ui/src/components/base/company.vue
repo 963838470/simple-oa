@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import data from "../../commom/data.js";
-import commom from "../../commom/commom.js";
+import data from "../../common/data.js";
+import common from "../../common/common.js";
 
 export default {
   data() {
@@ -125,18 +125,18 @@ export default {
               console.log(res.data);
               this.editVisible = false;
             });
-            commom.success("修改成功！");
+            common.success("修改成功！");
             this.editVisible = false;
-            // commom.error("不能重复添加！");
+            // common.error("不能重复添加！");
           } else {
             // 新增
             this.$ajax.post("ou", this.editData).then(res => {
               this.editVisible = false;
               this.ous.push(res.data);
             });
-            commom.success("添加成功！");
+            common.success("添加成功！");
             this.editVisible = false;
-            // commom.error("不能重复添加！");
+            // common.error("不能重复添加！");
           }
         }
       });
@@ -151,7 +151,7 @@ export default {
       })
         .then(() => {
           this.ous.splice(index, 1);
-          commom.success("删除成功！");
+          common.success("删除成功！");
         })
         .catch(() => {});
     },
@@ -162,7 +162,7 @@ export default {
           this.ou.splice(index, 1);
         }
       }
-      commom.success("批量删除成功！");
+      common.success("批量删除成功！");
     }
   },
   created() {
