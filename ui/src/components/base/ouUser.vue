@@ -66,7 +66,6 @@ export default {
       return data.label.indexOf(value) !== -1;
     },
     handleNodeClick(data) {
-      console.log(data);
     },
     initOu() {
       this.$ajax.get("ou").then(res => {
@@ -126,6 +125,8 @@ export default {
                     self.editTitle = "编辑机构";
                     self.editVisible = true;
                     self.editData = data;
+                    console.log("编辑数据");
+                    console.log(self.editData);
                     return;
                   }
                 }
@@ -160,6 +161,7 @@ export default {
     editConfirm() {
       var self = this;
       this.$refs["editData"].validate(valid => {
+        console.log("检测状态:" + valid);
         if (valid) {
           if (this.editData.id != null) {
             // 编辑

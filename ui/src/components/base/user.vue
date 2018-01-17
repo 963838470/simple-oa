@@ -43,7 +43,7 @@
 
     <!-- 新增、编辑界面 -->
     <div>
-      <el-dialog :title="editTitle" v-model="editVisible" :close-on-click-modal="false">
+      <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
         <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
           <el-form-item label="名称" prop="name">
             <el-input v-model="editData.name" auto-complete="off"></el-input>
@@ -99,13 +99,6 @@
         editTitle:"新增部门",
         editVisible: false,
         editData:{
-          department_id: null,
-          name: '',
-          sex: 0,
-          age: 0,
-          tel: '',
-          email: '',
-          address: ''
         },
         editRule: {
 					name: [
@@ -146,15 +139,15 @@
       add:function(){
         this.editTitle = "新增部门";
         this.editVisible = true;
-        this.editData = {
-          department_id: null,
-          name: '',
-          sex: 0,
-          age: null,
-          tel: '',
-          email: '',
-          address: ''
-        };
+        // this.editData = {
+        //   department_id: null,
+        //   name: '',
+        //   sex: 0,
+        //   age: null,
+        //   tel: '',
+        //   email: '',
+        //   address: ''
+        // };
       },
       addConfirm:function(){
         var isValid = false;
