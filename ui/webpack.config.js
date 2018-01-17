@@ -17,7 +17,7 @@ module.exports = {
             { test: /\.vue$/, loader: ['vue-loader'], exclude: /node_modules/ },
             { test: /\.js$/, loader: "babel-loader", exclude: /node_modules/ },
             { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] },
-            { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] },
+            { test: /\.(png|svg|jpg|gif|ico)$/, use: ['file-loader'] },
             { test: /\.(woff|woff2|eot|ttf|otf)$/, use: ['file-loader'] },
         ]
     },
@@ -28,7 +28,7 @@ module.exports = {
     },
     plugins: [
         //new CleanWebpackPlugin(['dist']),   // 清空dist目录
-        new HtmlWebpackPlugin({ template: 'src/index.html' }), // 生成新的index.html并包含引用
+        new HtmlWebpackPlugin({ template: 'src/index.html', favicon: 'src/favicon.ico', }), // 生成新的index.html并包含引用
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         // new webpack.optimize.UglifyJsPlugin({
