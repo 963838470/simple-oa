@@ -44,6 +44,7 @@ namespace oa_server.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]AuthorityUser model)
         {
+            model.createTime = DateTime.Now;
             return Json(_AuthorityUserDal.Add(model));
         }
 

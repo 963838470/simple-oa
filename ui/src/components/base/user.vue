@@ -21,8 +21,8 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="操作" width="160">
           <template slot-scope="scope">
-            <el-button size="mini" @click="edit(scope.$index)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="del(scope.$index)">删除</el-button>
+            <el-button size="mini" @click="edit(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="del(scope.row)">删除</el-button>
           </template>
         </el-table-column>
         <el-table-column type="index" label="序号" width="80"></el-table-column>
@@ -37,7 +37,7 @@
       <!--工具条-->
       <el-col :span="24" class="toolbar">
         <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0">批量删除</el-button>
-        <el-pagination layout="prev, pager, next" :page-size="20" @current-change="pageIndexChange" :total="users.length" style="float:right;"></el-pagination>
+        <el-pagination layout="prev, pager, next" :page-size="10" @current-change="pageIndexChange" :total="users.length" style="float:right;"></el-pagination>
       </el-col>
     </div>
 
@@ -108,14 +108,14 @@ export default {
       this.selIds = selection;
     },
     queryClick() {
-      this.users = data.users.filter(data => {
-        return data.name.indexOf(this.filters.name) > -1;
-      });
+      // this.users = data.users.filter(data => {
+      //   return data.name.indexOf(this.filters.name) > -1;
+      // });
     },
     pageIndexChange() {
-      this.users = data.users.filter(data => {
-        return data.name.indexOf(this.filters.name) > -1;
-      });
+      // this.users = data.users.filter(data => {
+      //   return data.name.indexOf(this.filters.name) > -1;
+      // });
     },
     filterSex(row, column) {
       var sexObj = { 0: "男", 1: "女" };
@@ -125,14 +125,13 @@ export default {
     add: function() {
       this.editTitle = "新增部门";
       this.editVisible = true;
-      // this.editData = {
-      //   name: '',
-      //   sex: 0,
-      //   age: null,
-      //   tel: '',
-      //   email: '',
-      //   address: ''
-      // };
+      this.editData = {};
+    },
+    // 编辑
+    edit(row) {
+      this.editData = row;
+      this.editTitle = "编辑人员";
+      this.editVisible = true;
     },
     addConfirm() {
       var isValid = false;
@@ -143,45 +142,36 @@ export default {
         }
       });
       if (isValid) {
-        if (this.editData.index != null && this.editData.index >= 0) {
+        if (this.editData.id != null) {
           // 编辑
-          if (this.editData.name.indexOf(this.users) == -1) {
-            this.users[this.editData.index] = this.editData;
-            common.success("修改成功！");
+          this.$ajax.put("user", this.editData).then(res => {
+            this.initUser();
             this.editVisible = false;
-          } else {
-            common.error("不能重复添加！");
-          }
+            common.success("编辑成功！");
+          });
         } else {
           // 新增
-          if (this.editData.name.indexOf(this.users) == -1) {
-            this.users.push(this.editData);
-            common.success("添加成功！");
+          this.$ajax.post("user", this.editData).then(res => {
+            this.initUser();
             this.editVisible = false;
-          } else {
-            common.error("不能重复添加！");
-          }
+            common.success("新增成功！");
+          });
         }
       }
     },
     addCancer: function() {
       this.editVisible = false;
     },
-    // 编辑
-    edit(index) {
-      this.editData.index = index;
-
-      this.editTitle = "编辑人员";
-      this.editVisible = true;
-    },
     // 删除
-    del(index) {
-      this.$confirm("此操作将永久删除该部门, 是否继续?", "提示", {
+    del(row) {
+      this.$confirm("此操作将永久删除该人员, 是否继续?", "提示", {
         type: "warning"
       })
         .then(() => {
-          this.users.splice(index, 1);
-          common.success("删除成功！");
+          this.$ajax.delete("user/" + row.id).then(res => {
+            this.initUser();
+            common.success("删除成功！");
+          });
         })
         .catch(() => {});
     },
@@ -193,12 +183,15 @@ export default {
         }
       }
       common.success("批量删除成功！");
+    },
+    initUser() {
+      this.$ajax.get("user").then(res => {
+        this.users = res.data;
+      });
     }
   },
   mounted() {
-    this.$ajax.get("user").then(res => {
-      this.users = res.data;
-    });
+    this.initUser();
   }
 };
 </script>

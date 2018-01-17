@@ -20,6 +20,8 @@ namespace oa_server
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new WebApiErrorHandleAttribute());
         }
     }
 }
