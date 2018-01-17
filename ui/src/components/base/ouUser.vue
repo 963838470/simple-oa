@@ -65,8 +65,7 @@ export default {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
-    handleNodeClick(data) {
-    },
+    handleNodeClick(data) {},
     initOu() {
       this.$ajax.get("ou").then(res => {
         this.ous = res.data;
@@ -158,8 +157,13 @@ export default {
         ]
       );
     },
-    editConfirm() {
+    editConfirm: function() {
       var self = this;
+      debugger;
+      this.$refs["editData"].validate(function(valid) {
+        // 表单校验
+        console.log("检测状态:" + valid);
+      });
       this.$refs["editData"].validate(valid => {
         console.log("检测状态:" + valid);
         if (valid) {
