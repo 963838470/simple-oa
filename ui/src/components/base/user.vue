@@ -37,7 +37,7 @@
       <!--工具条-->
       <el-col :span="24" class="toolbar">
         <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0">批量删除</el-button>
-        <el-pagination layout="prev, pager, next" :page-size="10" @current-change="pageIndexChange" :total="users.length" style="float:right;"></el-pagination>
+        <el-pagination layout="prev, pager, next" :page-size="filters.pageSize" @current-change="pageIndexChange" :total="totalCount" style="float:right;"></el-pagination>
       </el-col>
     </div>
 
@@ -87,8 +87,10 @@ export default {
       selIds: [], // 列表选中列id
       filters: {
         name: "",
-        pageIndex: 1
+        pageIndex: 1,
+        pageSize: 10
       },
+      totalCount: 0,
       // 新增
       editTitle: "新增部门",
       editVisible: false,
@@ -112,7 +114,9 @@ export default {
       //   return data.name.indexOf(this.filters.name) > -1;
       // });
     },
-    pageIndexChange() {
+    pageIndexChange(pageIndex) {
+      this.filters.pageIndex = pageIndex;
+      this.initUser();
       // this.users = data.users.filter(data => {
       //   return data.name.indexOf(this.filters.name) > -1;
       // });
@@ -185,9 +189,18 @@ export default {
       common.success("批量删除成功！");
     },
     initUser() {
-      this.$ajax.get("user").then(res => {
-        this.users = res.data;
-      });
+      this.$ajax
+        .get("user", {
+          params: {
+            name: this.filters.name,
+            pageIndex: this.filters.pageIndex,
+            pageSize: this.filters.pageSize
+          }
+        })
+        .then(res => {
+          this.users = res.data.data;
+          this.totalCount = res.data.count;
+        });
     }
   },
   mounted() {
