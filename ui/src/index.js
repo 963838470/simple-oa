@@ -23,10 +23,14 @@ Axios.interceptors.request.use(function (config) {
 })
 Axios.interceptors.response.use((response) => {
     loading.close();
-    return response;
+    if (response.data.state != null && response.data.state == false) {
+        common.error(response.data.msg);
+    } else {
+        return response;
+    }
 }, (error) => {
     loading.close();
-    common.error("出错了");
+    common.error("请求异常");
     return Promise.reject(error);
 })
 

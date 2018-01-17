@@ -1,4 +1,5 @@
-﻿using System;
+﻿using oa_server.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,19 +13,12 @@ namespace oa_server
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            //Logger.Error(actionExecutedContext.Exception);
             actionExecutedContext.Response = actionExecutedContext.Request.CreateResponse(HttpStatusCode.OK,
-                new AjaxModel
+                new AjaxResult
                 {
-                    StatusCode = 500,
-                    Message = actionExecutedContext.Exception.Message
+                    state = false,
+                    msg = actionExecutedContext.Exception.Message
                 });
         }
-    }
-
-    internal class AjaxModel
-    {
-        public string Message { get; set; }
-        public object StatusCode { get; set; }
     }
 }
