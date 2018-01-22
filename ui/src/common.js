@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui';
+import { Notification, confirm } from 'element-ui';
 
 export default {
   // 机构
@@ -25,6 +25,11 @@ export default {
       title: '错误',
       message: msg
     });
+  },
+  confirm(msg) {
+    confirm(msg, "提示", {
+      type: "warning"
+    })
   },
   getRandom: function () {
     return parseInt(Math.random() * 10000000) + 1;;

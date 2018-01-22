@@ -57,7 +57,7 @@
 
 <script>
 import data from "../../common/data.js";
-import common from "../../common/common.js";
+import common from "../../common.js";
 
 export default {
   data() {

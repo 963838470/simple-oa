@@ -75,7 +75,7 @@
 
 <script>
   import data from '../../common/data'
-  import common from '../../common/common'
+  import common from '../../common.js'
 	export default {
 		data() {
 			return {

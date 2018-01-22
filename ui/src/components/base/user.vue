@@ -9,7 +9,7 @@
             <el-input v-model="filters.name" placeholder="姓名"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryClick">查询</el-button>
+            <el-button type="primary" @click="initUser">查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="add">新增</el-button>
@@ -37,7 +37,7 @@
       <!--工具条-->
       <el-col :span="24" class="toolbar">
         <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0">批量删除</el-button>
-        <el-pagination layout="prev, pager, next" :page-size="filters.pageSize" @current-change="pageIndexChange" :total="totalCount" style="float:right;"></el-pagination>
+        <el-pagination layout="total, prev, pager, next" background :page-size="filters.pageSize" @current-change="pageIndexChange" :total="totalCount" style="float:right;"></el-pagination>
       </el-col>
     </div>
 
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import common from "../../common/common";
+import common from "../../common.js";
 
 export default {
   data() {
@@ -109,17 +109,9 @@ export default {
     select: function(selection) {
       this.selIds = selection;
     },
-    queryClick() {
-      // this.users = data.users.filter(data => {
-      //   return data.name.indexOf(this.filters.name) > -1;
-      // });
-    },
     pageIndexChange(pageIndex) {
       this.filters.pageIndex = pageIndex;
       this.initUser();
-      // this.users = data.users.filter(data => {
-      //   return data.name.indexOf(this.filters.name) > -1;
-      // });
     },
     filterSex(row, column) {
       var sexObj = { 0: "男", 1: "女" };
@@ -176,8 +168,7 @@ export default {
             this.initUser();
             common.success("删除成功！");
           });
-        })
-        .catch(() => {});
+        });
     },
     delMulti() {
       for (var i = this.selIds.length; i >= 0; i--) {
