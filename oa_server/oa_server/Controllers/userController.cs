@@ -67,15 +67,23 @@ namespace oa_server.Controllers
         /// <summary>
         /// 删除用户
         /// </summary>
-        /// <param name="id">用户ID</param>
+        /// <param name="ids">用户ID,多个使用,分割</param>
         /// <returns></returns>
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(string ids)
         {
             try
             {
-                AuthorityUser model = _AuthorityUserDal.Get().FirstOrDefault(o => o.id == id);
-                _AuthorityUserDal.Delete(model);
+                int id = 0;
+                string[] arrayId = ids.Split(',');
+                foreach (string item in arrayId)
+                {
+                    if (int.TryParse(item, out id))
+                    {
+                        AuthorityUser model = _AuthorityUserDal.Get().FirstOrDefault(o => o.id == id);
+                        _AuthorityUserDal.Delete(model);
+                    }
+                }
                 return Ok("删除成功");
             }
             catch (Exception ex)

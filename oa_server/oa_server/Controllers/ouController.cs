@@ -93,15 +93,25 @@ namespace oa_server.Controllers
         /// <summary>
         /// 删除机构
         /// </summary>
-        /// <param name="id">机构ID</param>
+        /// <param name="ids">机构ID,多个使用,分割</param>
         /// <returns></returns>
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(string ids)
         {
             try
             {
-                AuthorityOu model = _AuthorityOuDal.Get().FirstOrDefault(o => o.id == id);
-                _AuthorityOuDal.Delete(model);
+                int id = 0;
+                string[] arrayId = ids.Split(',');
+                foreach (string item in arrayId)
+                {
+                    if (int.TryParse(item, out id))
+                    {
+                        AuthorityOu model = _AuthorityOuDal.Get().FirstOrDefault(o => o.id == id);
+                        _AuthorityOuDal.Delete(model);
+                    }
+
+                }
+
                 return Ok("删除成功");
             }
             catch (Exception ex)

@@ -17,7 +17,7 @@
         </el-form>
       </el-col>
       <!--列表-->
-      <el-table :data="users" highlight-current-row stripe border fit @selection-change="select">
+      <el-table :data="users" highlight-current-row stripe border fit ref="table">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="操作" width="160">
           <template slot-scope="scope">
@@ -28,15 +28,15 @@
         <el-table-column type="index" label="序号" width="80"></el-table-column>
         <el-table-column prop="name" label="姓名" width="100"></el-table-column>
         <el-table-column prop="loginName" label="登陆名" width="200"></el-table-column>
-        <el-table-column prop="password" label="密码" width="100" sortable></el-table-column>
+        <el-table-column prop="password" label="密码" width="100"></el-table-column>
         <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
         <el-table-column prop="phone" label="电话" width="150"></el-table-column>
-        <el-table-column prop="address" label="住址" width="100" sortable></el-table-column>
+        <el-table-column prop="address" label="住址" width="100"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
       </el-table>
       <!--工具条-->
       <el-col :span="24" class="toolbar">
-        <el-button type="danger" @click="delMulti" :disabled="this.selIds.length===0">批量删除</el-button>
+        <el-button type="danger" @click="delMulti" :disabled="this.$refs.table.selection.length<=0">批量删除</el-button>
         <el-pagination layout="total, prev, pager, next" background :page-size="filters.pageSize" @current-change="pageIndexChange" :total="totalCount" style="float:right;"></el-pagination>
       </el-col>
     </div>
@@ -100,15 +100,16 @@ export default {
           { required: true, message: "请输入人员名称", trigger: "blur" },
           { min: 2, max: 5, message: "长度在 2 到 5 个字符", trigger: "blur" }
         ],
-        age: [{ type: "number", message: "请输入正确的年龄格式", trigger: "blur" }],
-        email: [{ type: "email", message: "请输入正确的邮箱格式", trigger: "blur" }]
+        age: [
+          { type: "number", message: "请输入正确的年龄格式", trigger: "blur" }
+        ],
+        email: [
+          { type: "email", message: "请输入正确的邮箱格式", trigger: "blur" }
+        ]
       }
     };
   },
   methods: {
-    select: function(selection) {
-      this.selIds = selection;
-    },
     pageIndexChange(pageIndex) {
       this.filters.pageIndex = pageIndex;
       this.initUser();
@@ -162,22 +163,27 @@ export default {
     del(row) {
       this.$confirm("此操作将永久删除该人员, 是否继续?", "提示", {
         type: "warning"
-      })
-        .then(() => {
-          this.$ajax.delete("user/" + row.id).then(res => {
-            this.initUser();
-            common.success("删除成功！");
-          });
+      }).then(() => {
+        this.$ajax.delete("user?ids=" + row.id).then(res => {
+          this.initUser();
+          common.success("删除成功！");
         });
+      });
     },
     delMulti() {
-      for (var i = this.selIds.length; i >= 0; i--) {
-        var index = data.users.indexOf(this.selIds[i]);
-        if (index > -1) {
-          this.users.splice(index, 1);
+      this.$confirm("此操作将永久删除该人员, 是否继续?", "提示", {
+        type: "warning"
+      }).then(() => {
+        var selection = this.$refs.table.selection;
+        var ids = [];
+        for (var i = 0; i < selection.length; i++) {
+          ids.push(selection[i].id);
         }
-      }
-      common.success("批量删除成功！");
+        this.$ajax.delete("user?ids=" + ids.join(",")).then(res => {
+          this.initUser();
+          common.success("批量删除成功！");
+        });
+      });
     },
     initUser() {
       this.$ajax
