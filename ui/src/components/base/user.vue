@@ -36,7 +36,7 @@
       </el-table>
       <!--工具条-->
       <el-col :span="24" class="toolbar">
-        <el-button type="danger" @click="delMulti" :disabled="this.$refs.table.selection.length<=0">批量删除</el-button>
+        <el-button type="danger" @click="delMulti" :disabled="this.$refs.table != null && this.$refs.table.selection.length<=0">批量删除</el-button>
         <el-pagination layout="total, prev, pager, next" background :page-size="filters.pageSize" @current-change="pageIndexChange" :total="totalCount" style="float:right;"></el-pagination>
       </el-col>
     </div>
