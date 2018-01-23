@@ -167,6 +167,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebApiErrorHandleAttribute.cs" />
     <Compile Include="Controllers\ouController.cs" />
+    <Compile Include="Controllers\ouTreeController.cs" />
     <Compile Include="Controllers\userController.cs" />
     <Compile Include="DAL\AuthorityOuDal.cs" />
     <Compile Include="DAL\AuthorityUserDal.cs" />

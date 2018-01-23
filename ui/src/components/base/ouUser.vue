@@ -6,7 +6,7 @@
           <el-input placeholder="输入机构名称进行过滤" v-model="filterText"></el-input>
         </el-col>
         <el-col>
-          <el-tree class="filter-tree" :data="ous" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode">
+          <el-tree class="filter-tree" :data="ouTree" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode">
           </el-tree>
         </el-col>
       </el-col>
@@ -18,13 +18,17 @@
     <!-- 新增、编辑机构界面 -->
     <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
+        <el-form-item label="上级机构">
+          <el-cascader :options="ouTree"></el-cascader>
+          <el-input v-model="editData.pid" auto-complete="off" placeholder="若无上级机构则不填"></el-input>
+        </el-form-item>
         <el-form-item label="机构名称" prop="name">
           <el-input v-model="editData.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="机构地址" prop="address">
+        <el-form-item label="机构地址">
           <el-input v-model="editData.address" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="description">
+        <el-form-item label="描述">
           <el-input v-model="editData.description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -43,6 +47,7 @@ export default {
   data() {
     return {
       filterText: "",
+      ouTree: [],
       ous: [],
       checkedOu: {},
       // 编辑
@@ -52,15 +57,7 @@ export default {
         name: null
       },
       editRule: {
-        name: [
-          { required: true, message: "请输入机构名称", trigger: ["blur"] }
-        ],
-        address: [
-          { required: false, message: "请输入机构名称", trigger: ["blur"] }
-        ],
-        description: [
-          { required: false, message: "请输入机构名称", trigger: ["blur"] }
-        ]
+        name: [{ required: true, message: "请输入机构名称", trigger: "blur" }]
       }
     };
   },
@@ -78,12 +75,44 @@ export default {
       this.checkedOu = data;
     },
     initOu() {
-      this.$ajax.get("ou").then(res => {
-        this.ous = res.data;
+      this.$ajax.get("ouTree").then(res => {
+        this.ouTree = res.data;
         this.checkedOu = res.data[0];
+        this.$ajax.get("ou").then(res => {
+          this.ous = res.data;
+        });
       });
     },
     rightClick(data) {},
+    editConfirm() {
+      var self = this;
+      this.$refs["editData"].validate(valid => {
+        console.log("检测状态:" + valid);
+        if (valid) {
+          if (this.editData.id != null) {
+            // 编辑
+            this.$ajax.put("ou", this.editData).then(res => {
+              this.editVisible = false;
+              debugger;
+              self.initOu();
+              common.success("修改成功！");
+            });
+          } else {
+            // 新增
+            this.$ajax.post("ou", this.editData).then(res => {
+              this.editVisible = false;
+              self.initOu();
+              common.success("添加成功！");
+            });
+          }
+        } else {
+          common.success("表单校验不成功！");
+        }
+      });
+    },
+    editCancer: function() {
+      this.editVisible = false;
+    },
     renderContent: function(createElement, { node, data, store }) {
       var self = this;
       return createElement(
@@ -167,39 +196,6 @@ export default {
           )
         ]
       );
-    },
-    editConfirm: function() {
-      var self = this;
-      debugger;
-      this.$refs["editData"].validate(function(valid) {
-        // 表单校验
-        console.log("检测状态:" + valid);
-      });
-      this.$refs["editData"].validate(valid => {
-        console.log("检测状态:" + valid);
-        if (valid) {
-          if (this.editData.id != null) {
-            // 编辑
-            this.$ajax.put("ou", this.editData).then(res => {
-              this.editVisible = false;
-              self.initOu();
-              common.success("修改成功！");
-            });
-          } else {
-            // 新增
-            this.$ajax.post("ou", this.editData).then(res => {
-              this.editVisible = false;
-              self.initOu();
-              common.success("添加成功！");
-            });
-          }
-        } else {
-          common.success("表单校验不成功！");
-        }
-      });
-    },
-    editCancer: function() {
-      this.editVisible = false;
     }
   },
   created() {
