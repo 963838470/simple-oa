@@ -84,8 +84,8 @@ export default {
     return {
       // 列表
       users: [],
-      selIds: [], // 列表选中列id
       filters: {
+        ouid: 0,
         name: "",
         pageIndex: 1,
         pageSize: 10
@@ -108,6 +108,9 @@ export default {
         ]
       }
     };
+  },
+  props: {
+    ouId: 0
   },
   methods: {
     pageIndexChange(pageIndex) {
@@ -191,13 +194,19 @@ export default {
           params: {
             name: this.filters.name,
             pageIndex: this.filters.pageIndex,
-            pageSize: this.filters.pageSize
+            pageSize: this.filters.pageSize,
+            ouId: this.ouId
           }
         })
         .then(res => {
           this.users = res.data.data;
           this.totalCount = res.data.count;
         });
+    }
+  },
+  watch: {
+    ouId() {
+      this.initUser();
     }
   },
   mounted() {

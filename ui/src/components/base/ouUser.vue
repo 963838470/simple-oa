@@ -2,12 +2,16 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <el-input placeholder="输入机构名称进行过滤" v-model="filterText"></el-input>
-        <el-tree class="filter-tree" :data="ous" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode">
-        </el-tree>
+        <el-col class="toolbar">
+          <el-input placeholder="输入机构名称进行过滤" v-model="filterText"></el-input>
+        </el-col>
+        <el-col>
+          <el-tree class="filter-tree" :data="ous" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode">
+          </el-tree>
+        </el-col>
       </el-col>
       <el-col :span="18">
-        <div class="grid-content bg-purple-light"></div>
+        <user :ou-id="checkedOu.id"></user>
       </el-col>
     </el-row>
 
@@ -34,6 +38,7 @@
 
 <script>
 import common from "../../common.js";
+import user from "./user.vue";
 export default {
   data() {
     return {
@@ -47,8 +52,12 @@ export default {
         name: null
       },
       editRule: {
-        name: [{ required: true, message: "请输入机构名称", trigger: ["blur"] }],
-        address: [{ required: false, message: "请输入机构名称", trigger: ["blur"] }],
+        name: [
+          { required: true, message: "请输入机构名称", trigger: ["blur"] }
+        ],
+        address: [
+          { required: false, message: "请输入机构名称", trigger: ["blur"] }
+        ],
         description: [
           { required: false, message: "请输入机构名称", trigger: ["blur"] }
         ]
@@ -65,7 +74,9 @@ export default {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
-    handleNodeClick(data) {},
+    handleNodeClick(data) {
+      this.checkedOu = data;
+    },
     initOu() {
       this.$ajax.get("ou").then(res => {
         this.ous = res.data;
@@ -193,6 +204,9 @@ export default {
   },
   created() {
     this.initOu();
+  },
+  components: {
+    user
   }
 };
 </script>

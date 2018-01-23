@@ -31,7 +31,7 @@ namespace oa_server.Controllers
 
         private static List<TreeData> BuildTree(List<TreeData> trees, List<AuthorityOu> ous, int pid)
         {
-            foreach (AuthorityOu item in ous.FindAll(o => o.pid == pid).OrderBy(o => o.name))
+            foreach (AuthorityOu item in ous.FindAll(o => o.pid == pid).OrderBy(o => o.createTime))
             {
                 TreeData tree = new TreeData();
                 tree.id = item.id;

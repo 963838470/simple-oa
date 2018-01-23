@@ -20,11 +20,11 @@ namespace oa_server.Controllers
         /// 获取所有用户
         /// </summary>
         /// <returns></returns>
-        public IHttpActionResult Get(string name = "", int pageSize = 10, int pageIndex = 1)
+        public IHttpActionResult Get(string name = "", int pageSize = 10, int pageIndex = 1, int ouId = 0)
         {
-            var models = _AuthorityUserDal.Get().Where(o => name == null || o.name.Contains(name));
             ListData data = new ListData();
-            data.data = models.OrderBy(o => o.name).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            List<AuthorityUser> models = _AuthorityUserDal.GetUser(name, ouId);
+            data.data = models.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
             data.count = models.Count();
 
             return Json(data);
