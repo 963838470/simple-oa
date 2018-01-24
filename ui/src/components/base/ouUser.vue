@@ -11,7 +11,7 @@
         </el-col>
       </el-col>
       <el-col :span="18">
-        <user :ou-id="checkedOu.id"></user>
+        <user :ou-id="checkedOu.id" :edit-ou-path="editOuPath" :ou-tree="ouTree"></user>
       </el-col>
     </el-row>
 
@@ -19,7 +19,6 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
         <el-form-item label="上级机构">
-          <!-- v-model="editData.pid" -->
           <el-cascader v-model="editOuPath" placeholder="若无上级机构则不填" :options="ouTree" style="width:100%;" change-on-select clearable :props="{value:'id',label:'name'}"></el-cascader>
         </el-form-item>
         <el-form-item label="机构名称" prop="name">

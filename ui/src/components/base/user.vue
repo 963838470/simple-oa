@@ -46,6 +46,9 @@
       <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
         <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
           <el-form-item label="名称" prop="name">
+            <el-cascader v-model="ouPath" placeholder="若无上级机构则不填" :options="ouTree" style="width:100%;" change-on-select clearable :props="{value:'id',label:'name'}"></el-cascader>
+          </el-form-item>
+          <el-form-item label="名称" prop="name">
             <el-input v-model="editData.name" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="登陆名" prop="loginName">
@@ -80,7 +83,8 @@
 import common from "../../common.js";
 
 export default {
-  data() {
+  props: ["editOuPath", "ouId", "ouTree"],
+  data: function() {
     return {
       // 列表
       users: [],
@@ -106,11 +110,9 @@ export default {
         email: [
           { type: "email", message: "请输入正确的邮箱格式", trigger: "blur" }
         ]
-      }
+      },
+      ouPath: this.editOuPath
     };
-  },
-  props: {
-    ouId: 0
   },
   methods: {
     pageIndexChange(pageIndex) {
