@@ -188,8 +188,7 @@ export default {
                       .then(() => {
                         self.$ajax.delete("ou?ids=" + data.id).then(res => {
                           self.initOu();
-                          store.remove(data);
-                          common.success(data);
+                          common.success(res.data);
                         });
                       })
                       .catch(() => {});

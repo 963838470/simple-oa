@@ -29,9 +29,8 @@ namespace oa_server.DAL
         }
 
         /// <summary>
-        /// 添加实体
+        /// 获取实体
         /// </summary>
-        /// <param name="model"></param>
         /// <returns></returns>
         public DbSet<T> Get()
         {
