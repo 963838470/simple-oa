@@ -92,7 +92,7 @@ export default {
       },
       totalCount: 0,
       // 新增
-      editTitle: "新增部门",
+      editTitle: "",
       editVisible: false,
       editData: {},
       editRule: {
@@ -123,7 +123,7 @@ export default {
     },
     // 新增
     add: function() {
-      this.editTitle = "新增部门";
+      this.editTitle = "新增人员";
       this.editVisible = true;
       this.editData = {};
     },
