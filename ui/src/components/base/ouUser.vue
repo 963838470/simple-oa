@@ -6,7 +6,7 @@
           <el-input placeholder="输入机构名称进行过滤" v-model="filterText"></el-input>
         </el-col>
         <el-col>
-          <el-tree class="filter-tree" :data="ouTree" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode">
+          <el-tree class="filter-tree" :data="ouTree" ref="ouTree" highlight-current @node-click="handleNodeClick" :render-content="renderContent" @contextmenu.prevent="rightClick" :filter-node-method="filterNode" change-on-select :props="{label:'name'}">
           </el-tree>
         </el-col>
       </el-col>
@@ -19,8 +19,8 @@
     <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
       <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
         <el-form-item label="上级机构">
-          <el-cascader :options="ouTree"></el-cascader>
-          <el-input v-model="editData.pid" auto-complete="off" placeholder="若无上级机构则不填"></el-input>
+          <!-- v-model="editData.pid" -->
+          <el-cascader v-model="editOuPath" placeholder="若无上级机构则不填" :options="ouTree" style="width:100%;" change-on-select clearable :props="{value:'id',label:'name'}"></el-cascader>
         </el-form-item>
         <el-form-item label="机构名称" prop="name">
           <el-input v-model="editData.name" auto-complete="off"></el-input>
@@ -53,9 +53,8 @@ export default {
       // 编辑
       editTitle: "",
       editVisible: false,
-      editData: {
-        name: null
-      },
+      editData: {},
+      editOuPath: [],
       editRule: {
         name: [{ required: true, message: "请输入机构名称", trigger: "blur" }]
       }
@@ -87,14 +86,17 @@ export default {
     editConfirm() {
       var self = this;
       this.$refs["editData"].validate(valid => {
-        console.log("检测状态:" + valid);
         if (valid) {
+          this.editData.pid =
+            this.editOuPath.length > 0
+              ? this.editOuPath[this.editOuPath.length - 1]
+              : 0;
+          this.editData.path = this.editOuPath.join(",");
           if (this.editData.id != null) {
             // 编辑
             this.$ajax.put("ou", this.editData).then(res => {
               this.editVisible = false;
-              debugger;
-              self.initOu();
+              this.initOu();
               common.success("修改成功！");
             });
           } else {
@@ -164,8 +166,7 @@ export default {
                     self.editTitle = "编辑机构";
                     self.editVisible = true;
                     self.editData = data;
-                    console.log("编辑数据");
-                    console.log(self.editData);
+                    self.editOuPath = common.convertIntArray(data.path);
                     return;
                   }
                 }
@@ -187,8 +188,7 @@ export default {
                           store.remove(data);
                           common.success("删除成功！");
                         });
-                      })
-                      .catch(() => {});
+                      });
                   }
                 }
               })

@@ -166,6 +166,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebApiErrorHandleAttribute.cs" />
+    <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="Controllers\ouController.cs" />
     <Compile Include="Controllers\ouTreeController.cs" />
     <Compile Include="Controllers\userController.cs" />

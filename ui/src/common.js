@@ -33,6 +33,16 @@ export default {
   },
   getRandom: function () {
     return parseInt(Math.random() * 10000000) + 1;;
+  },
+  convertIntArray: function (str) {
+    var array = [];
+    var strArray = str.split(",");
+    for (var i = 0; i < strArray.length; i++) {
+      if (strArray[i] != null && strArray[i] != "" && !isNaN(parseInt(strArray[i]))) {
+        array.push(parseInt(strArray[i]));
+      }
+    }
+    return array;
   }
 }
 

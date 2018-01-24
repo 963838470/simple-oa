@@ -34,16 +34,7 @@ namespace oa_server.Controllers
         {
             foreach (AuthorityOu item in ous.FindAll(o => o.pid == pid).OrderBy(o => o.createTime))
             {
-                TreeData tree = new TreeData();
-                tree.id = item.id;
-                tree.label = item.name;
-                tree.address = item.address;
-                tree.createTime = item.createTime;
-                tree.description = item.description;
-                tree.name = item.name;
-                tree.path = item.path;
-                tree.pid = item.pid;
-
+                TreeData tree = JsonHelper.EntityParse<TreeData>(item);
                 trees.Add(tree);
 
                 List<AuthorityOu> childOu = ous.FindAll(n => n.pid == item.id);
