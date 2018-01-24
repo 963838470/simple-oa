@@ -29,7 +29,7 @@
           <el-input v-model="editData.address" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="描述">
-          <el-input v-model="editData.description" auto-complete="off"></el-input>
+          <el-input type="textarea" autosize v-model="editData.description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -103,7 +103,7 @@ export default {
             // 新增
             this.$ajax.post("ou", this.editData).then(res => {
               this.editVisible = false;
-              self.initOu();
+              this.initOu();
               common.success("添加成功！");
             });
           }
@@ -152,6 +152,9 @@ export default {
                     self.editTitle = "新增机构";
                     self.editVisible = true;
                     self.editData = {};
+                    self.editOuPath = common.convertIntArray(
+                      data.path + "," + data.id
+                    );
                     return;
                   }
                 }
@@ -183,12 +186,13 @@ export default {
                         type: "warning"
                       })
                       .then(() => {
-                        self.$ajax.delete("ou/" + data.id).then(res => {
+                        self.$ajax.delete("ou?ids=" + data.id).then(res => {
                           self.initOu();
                           store.remove(data);
-                          common.success("删除成功！");
+                          common.success(data);
                         });
-                      });
+                      })
+                      .catch(() => {});
                   }
                 }
               })

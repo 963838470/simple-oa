@@ -67,26 +67,27 @@ namespace oa_server.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(string ids)
         {
-            try
+            var ous = _AuthorityOuDal.Get();
+            int id = 0;
+            string[] arrayId = ids.Split(',');
+            foreach (string item in arrayId)
             {
-                int id = 0;
-                string[] arrayId = ids.Split(',');
-                foreach (string item in arrayId)
+                if (int.TryParse(item, out id))
                 {
-                    if (int.TryParse(item, out id))
+                    // 将直接子机构关系删除
+                    foreach (AuthorityOu ou in ous.Where(o => o.pid == id).ToList())
                     {
-                        AuthorityOu model = _AuthorityOuDal.Get().FirstOrDefault(o => o.id == id);
-                        _AuthorityOuDal.Delete(model);
+                        ou.pid = 0;
+                        ou.path = ou.path.Replace("," + id + ",", "").Replace("," + id, "").Replace(id + ",", "");
+                        _AuthorityOuDal.Update(ou);
                     }
-
+                    // 逻辑删除该机构
+                    AuthorityOu model = ous.FirstOrDefault(o => o.id == id);
+                    model.isDelete = true;
+                    _AuthorityOuDal.Update(model);
                 }
-
-                return Ok("删除成功");
             }
-            catch (Exception ex)
-            {
-                return Ok("删除失败!" + ex.Message);
-            }
+            return Ok("删除成功！");
         }
     }
 }
