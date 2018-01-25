@@ -169,8 +169,10 @@
     <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="Controllers\ouController.cs" />
     <Compile Include="Controllers\ouTreeController.cs" />
+    <Compile Include="Controllers\ouUserController.cs" />
     <Compile Include="Controllers\userController.cs" />
     <Compile Include="DAL\AuthorityOuDal.cs" />
+    <Compile Include="DAL\AuthorityOuUserDal.cs" />
     <Compile Include="DAL\AuthorityUserDal.cs" />
     <Compile Include="DAL\BaseDal.cs" />
     <Compile Include="Global.asax.cs">

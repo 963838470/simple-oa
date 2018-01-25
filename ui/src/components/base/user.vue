@@ -45,8 +45,8 @@
     <div>
       <el-dialog :title="editTitle" :visible.sync="editVisible" :close-on-click-modal="false">
         <el-form :model="editData" label-width="80px" :rules="editRule" ref="editData">
-          <el-form-item label="名称" prop="name">
-            <el-cascader v-model="ouPath" placeholder="若无上级机构则不填" :options="ouTree" style="width:100%;" change-on-select clearable :props="{value:'id',label:'name'}"></el-cascader>
+          <el-form-item label="机构">
+            <el-cascader v-model="editOuPath" placeholder="若无所属机构则不填" :options="ouTree" style="width:100%;" change-on-select clearable :props="{value:'id',label:'name'}"></el-cascader>
           </el-form-item>
           <el-form-item label="名称" prop="name">
             <el-input v-model="editData.name" auto-complete="off"></el-input>
@@ -83,7 +83,7 @@
 import common from "../../common.js";
 
 export default {
-  props: ["editOuPath", "ouId", "ouTree"],
+  props: ["checkedOu", "ouTree"],
   data: function() {
     return {
       // 列表
@@ -111,17 +111,13 @@ export default {
           { type: "email", message: "请输入正确的邮箱格式", trigger: "blur" }
         ]
       },
-      ouPath: this.editOuPath
+      editOuPath: []
     };
   },
   methods: {
     pageIndexChange(pageIndex) {
       this.filters.pageIndex = pageIndex;
       this.initUser();
-    },
-    filterSex(row, column) {
-      var sexObj = { 0: "男", 1: "女" };
-      return sexObj[row.sex];
     },
     // 新增
     add: function() {
@@ -154,9 +150,18 @@ export default {
         } else {
           // 新增
           this.$ajax.post("user", this.editData).then(res => {
-            this.initUser();
-            this.editVisible = false;
-            common.success("新增成功！");
+            if (this.editOuPath.length > 0) {
+              this.$ajax
+                .post("ouuser", {
+                  ouId: this.editOuPath[this.editOuPath.length - 1],
+                  userId: res.data.id
+                })
+                .then(res => {
+                  this.initUser();
+                  this.editVisible = false;
+                  common.success("新增成功！");
+                });
+            }
           });
         }
       }
@@ -191,13 +196,20 @@ export default {
       });
     },
     initUser() {
+      console.log(this.checkedOu)
+      console.log({
+            name: this.filters.name,
+            pageIndex: this.filters.pageIndex,
+            pageSize: this.filters.pageSize,
+            ouId: this.checkedOu.id
+          });
       this.$ajax
         .get("user", {
           params: {
             name: this.filters.name,
             pageIndex: this.filters.pageIndex,
             pageSize: this.filters.pageSize,
-            ouId: this.ouId
+            ouId: this.checkedOu.id
           }
         })
         .then(res => {
@@ -209,6 +221,12 @@ export default {
   watch: {
     ouId() {
       this.initUser();
+    },
+    checkedOu() {
+      this.editOuPath = common.convertIntArray(
+        this.checkedOu.path + "," + this.checkedOu.id
+      );
+      console.log(this.checkedOu);
     }
   },
   mounted() {

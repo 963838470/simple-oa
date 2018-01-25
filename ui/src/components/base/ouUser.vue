@@ -11,7 +11,7 @@
         </el-col>
       </el-col>
       <el-col :span="18">
-        <user :ou-id="checkedOu.id" :edit-ou-path="editOuPath" :ou-tree="ouTree"></user>
+        <user :checkedOu="checkedOu" :ou-tree="ouTree"></user>
       </el-col>
     </el-row>
 
