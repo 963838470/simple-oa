@@ -34,6 +34,12 @@ namespace oa_server.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]AuthorityOuUser model)
         {
+            var ous = _AuthorityOuUserDal.Get().Where(o => o.userId == model.userId).ToList();
+            foreach (var ou in ous)
+            {
+                _AuthorityOuUserDal.Delete(ou);
+            }
+
             return Json(_AuthorityOuUserDal.Add(model));
         }
 

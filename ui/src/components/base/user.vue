@@ -141,9 +141,18 @@ export default {
         if (this.editData.id != null) {
           // 编辑
           this.$ajax.put("user", this.editData).then(res => {
-            this.initUser();
-            this.editVisible = false;
-            common.success("编辑成功！");
+            if (this.editOuPath.length > 0) {
+              this.$ajax
+                .post("ouuser", {
+                  ouId: this.editOuPath[this.editOuPath.length - 1],
+                  userId: res.data.id
+                })
+                .then(res => {
+                  this.initUser();
+                  this.editVisible = false;
+                  common.success("编辑成功！");
+                });
+            }
           });
         } else {
           // 新增
@@ -194,13 +203,13 @@ export default {
       });
     },
     initUser() {
-      console.log(this.checkedOu)
+      console.log(this.checkedOu);
       console.log({
-            name: this.filters.name,
-            pageIndex: this.filters.pageIndex,
-            pageSize: this.filters.pageSize,
-            ouId: this.checkedOu.id
-          });
+        name: this.filters.name,
+        pageIndex: this.filters.pageIndex,
+        pageSize: this.filters.pageSize,
+        ouId: this.checkedOu.id
+      });
       this.$ajax
         .get("user", {
           params: {
