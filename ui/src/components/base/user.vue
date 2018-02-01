@@ -27,8 +27,6 @@
         </el-table-column>
         <el-table-column type="index" label="序号" width="80"></el-table-column>
         <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-        <el-table-column prop="loginName" label="登陆名" width="200"></el-table-column>
-        <el-table-column prop="password" label="密码" width="100"></el-table-column>
         <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
         <el-table-column prop="phone" label="电话" width="150"></el-table-column>
         <el-table-column prop="address" label="住址" width="100"></el-table-column>
@@ -226,6 +224,7 @@ export default {
       this.editOuPath = common.convertIntArray(
         this.checkedOu.path + "," + this.checkedOu.id
       );
+      this.initUser();
       console.log(this.checkedOu);
     }
   },
