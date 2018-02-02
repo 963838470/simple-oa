@@ -4,6 +4,9 @@ body,
   padding: 0;
   margin: 0;
 }
+body {
+  overflow: hidden;
+}
 
 textarea {
   resize: none !important;
