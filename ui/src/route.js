@@ -7,19 +7,19 @@ export default new Router({
   routes: [
     {
       path: '/login',
-      component: require('./components/login.vue'),
+      component: require('./components/BaseLogin.vue'),
       hidden: true
     },
     {
       path: '/',
       name: '基础管理',
       alias: '/default',
-      component: resolve => require(["./components/homePage.vue"], resolve),
+      component: resolve => require(["./components/HomePage.vue"], resolve),
       iconCls: 'el-icon-message',
       children: [
-        { path: '/ouuser', name: '机构人员', component: resolve => require(['./components/base/ouUser.vue'], resolve) },
-        { path: '/project', name: '项目管理', component: resolve => require(['./components/base/project.vue'], resolve) },
-        { path: '/default', name: '首页', component: resolve => require(['./components/base/default.vue'], resolve), alias: '/', hidden: true },
+        { path: '/ouuser', name: '机构人员', component: resolve => require(['./components/base/OuUser.vue'], resolve) },
+        { path: '/project', name: '项目管理', component: resolve => require(['./components/base/Project.vue'], resolve) },
+        { path: '/default', name: '首页', component: resolve => require(['./components/base/Default.vue'], resolve), alias: '/', hidden: true },
       ]
     },
     {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Vue from 'vue';
-import App from './app.vue';
+import App from './App.vue';
 require("./style/common.css")
 import common from './common.js'
 
