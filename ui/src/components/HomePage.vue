@@ -3,20 +3,18 @@
     <header>
       <BaseHead></BaseHead>
     </header>
-    <section>
-      <div class="menu">
-        <BaseMenu></BaseMenu>
-      </div>
-      <!-- 面包屑 -->
-      <div class="main-container">
-        <el-breadcrumb separator="/" class="breadcrumb">
-          <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-            {{ item.name }}
-          </el-breadcrumb-item>
-        </el-breadcrumb>
-        <router-view class="main"></router-view>
-      </div>
-    </section>
+    <div class="menu">
+      <BaseMenu></BaseMenu>
+    </div>
+    <!-- 面包屑 -->
+    <div class="main-container">
+      <el-breadcrumb separator="/" class="breadcrumb">
+        <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
+          {{ item.name }}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+      <router-view class="main"></router-view>
+    </div>
   </div>
 </template>
 
@@ -36,8 +34,8 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  margin: 0 15px;
+header {
+  height: 60px;
 }
 
 .breadcrumb {
@@ -59,6 +57,11 @@ export default {
   bottom: 0;
   left: 240px;
   right: 0;
+  overflow: auto;
+}
+
+.main {
+  margin: 0 15px;
   overflow: auto;
 }
 </style>

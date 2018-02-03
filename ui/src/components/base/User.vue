@@ -203,13 +203,6 @@ export default {
       });
     },
     initUser() {
-      console.log(this.checkedOu);
-      console.log({
-        name: this.filters.name,
-        pageIndex: this.filters.pageIndex,
-        pageSize: this.filters.pageSize,
-        ouId: this.checkedOu.id
-      });
       this.$ajax
         .get("user", {
           params: {
