@@ -5,27 +5,23 @@
         <span class="title">SimpleOA系统</span>
       </p>
       <div class="main_content">
-        <p class="">用户登录</p>
+        <p class="no-margin">用户登录</p>
         <form>
           <p>
-            <i class="icon-user icon_font"></i>
-            <input type="email" class="login_input" id="Email1" placeholder="请输入用户名">
+            <i class="fa fa-user-o"></i>
+            <input type="text" class="login_input" placeholder="请输入用户名">
           </p>
           <p>
-            <i class="icon-lock icon_font"></i>
-            <input type="password" class="login_input" id="Password1" placeholder="请输入密码">
+            <i class="fa fa-lock"></i>
+            <input type="password" class="login_input" placeholder="请输入密码">
           </p>
-          <label>
-            <input type="checkbox">记住我的登录信息
+          <label class="remember">
+            <input type="checkbox" />记住我的登录信息
           </label>
-          <p>
-            <button style="submit" class="login-btn">登 录</button>
-          </p>
+          <button style="submit" class="login-btn">登 录</button>
         </form>
       </div>
-      <!--row end-->
     </div>
-    <!--container end-->
   </div>
 </template>
 
@@ -72,7 +68,7 @@ export default {
 
 .main_content {
   width: 100%;
-  height: 410px;
+  height: 380px;
   background: url("../image/main_bg.png") repeat;
   border-radius: 8px;
   padding: 20px;
@@ -86,6 +82,7 @@ export default {
   background: none;
   width: 100%;
   margin: 0 auto;
+  color: white;
 }
 
 .login-btn {
@@ -102,6 +99,20 @@ export default {
 
 p {
   line-height: 60px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.fa {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  font-size: 18px;
+  color: #3872f6;
+}
+
+.remember {
+  float: left;
   margin-bottom: 20px;
 }
 </style>
