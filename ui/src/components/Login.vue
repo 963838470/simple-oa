@@ -1,24 +1,26 @@
 <template>
   <div class="container">
-    <div class="wrap" style="height:450px;">
-      <span class="title">SimpleOA系统</span>
+    <div class="wrap">
+      <p>
+        <span class="title">SimpleOA系统</span>
+      </p>
       <div class="main_content">
         <p class="">用户登录</p>
         <form>
-          <div class="form-group mg-t20">
+          <p>
             <i class="icon-user icon_font"></i>
             <input type="email" class="login_input" id="Email1" placeholder="请输入用户名">
-          </div>
-          <div class="form-group mg-t20">
+          </p>
+          <p>
             <i class="icon-lock icon_font"></i>
             <input type="password" class="login_input" id="Password1" placeholder="请输入密码">
-          </div>
-          <div class="checkbox mg-b25">
-            <label>
-              <input type="checkbox">记住我的登录信息
-            </label>
-          </div>
-          <button style="submit" class="login-btn">登 录</button>
+          </p>
+          <label>
+            <input type="checkbox">记住我的登录信息
+          </label>
+          <p>
+            <button style="submit" class="login-btn">登 录</button>
+          </p>
         </form>
       </div>
       <!--row end-->
@@ -37,7 +39,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
   position: absolute;
@@ -54,10 +55,11 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 600px;
+  width: 550px;
   height: 450px;
   margin: auto;
   font-family: "微软雅黑";
+  font-size: 16px;
   color: white;
 }
 
@@ -73,6 +75,7 @@ export default {
   height: 410px;
   background: url("../image/main_bg.png") repeat;
   border-radius: 8px;
+  padding: 20px;
 }
 
 .login_input {
@@ -81,7 +84,7 @@ export default {
   line-height: 40px;
   padding: 2px 5px 2px 30px;
   background: none;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -93,7 +96,12 @@ export default {
   line-height: 50px;
   border-radius: 3px;
   border: none;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
+}
+
+p {
+  line-height: 60px;
+  margin-bottom: 20px;
 }
 </style>
