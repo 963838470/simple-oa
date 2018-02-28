@@ -9,7 +9,7 @@
         <form>
           <p>
             <i class="fa fa-user-o"></i>
-            <input type="text" class="login_input" placeholder="请输入用户名" v-model="username">
+            <input type="text" class="login_input" placeholder="请输入用户名" v-model="loginName">
           </p>
           <p>
             <i class="fa fa-lock"></i>
@@ -29,7 +29,7 @@
 export default {
   data() {
     return {
-      username: "",
+      loginName: "",
       password: "",
       isRemember: false
     };
@@ -38,14 +38,14 @@ export default {
     loginClick() {
       if (this.isRemember) {
         // 记住我的登录信息
-        localStorage.setItem("username", this.username);
+        localStorage.setItem("loginName", this.loginName);
         localStorage.setItem("password", this.password);
         localStorage.setItem("isRemember", this.isRemember);
       }
     }
   },
   created() {
-    this.username = localStorage.getItem("username");
+    this.loginName = localStorage.getItem("loginName");
     this.password = localStorage.getItem("password");
     this.isRemember = localStorage.getItem("isRemember");
   }

@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\oa_server.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -167,6 +168,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebApiErrorHandleAttribute.cs" />
     <Compile Include="Common\JsonHelper.cs" />
+    <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\ouController.cs" />
     <Compile Include="Controllers\ouTreeController.cs" />
     <Compile Include="Controllers\ouUserController.cs" />

@@ -27,5 +27,19 @@ namespace oa_server.DAL
 
             return db.Database.SqlQuery<AuthorityUser>(sql, param).ToList();
         }
+
+        public bool IsUserExist(string loginName, string password)
+        {
+            DbContext db = GetDbContext();
+            string sql = @" SELECT count(*) FROM dbo.AuthorityUser WHERE loginName=@loginName AND password=@password";
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter("loginName", loginName),
+                new SqlParameter("password", password)
+            };
+            int result = db.Database.SqlQuery(typeof(int), sql, param);
+
+            return result > 0;
+        }
     }
 }
