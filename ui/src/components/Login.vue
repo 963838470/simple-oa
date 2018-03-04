@@ -9,16 +9,16 @@
         <form>
           <p>
             <i class="fa fa-user-o"></i>
-            <input type="text" class="login_input" placeholder="请输入用户名">
+            <input type="text" class="login_input" placeholder="请输入用户名" v-model="loginName">
           </p>
           <p>
             <i class="fa fa-lock"></i>
-            <input type="password" class="login_input" placeholder="请输入密码">
+            <input type="password" class="login_input" placeholder="请输入密码" v-model="password">
           </p>
           <label class="remember">
-            <input type="checkbox" />记住我的登录信息
+            <input type="checkbox" v-model="isRemember" />记住我的登录信息
           </label>
-          <button style="submit" class="login-btn">登 录</button>
+          <button style="submit" class="login-btn" @click="loginClick">登 录</button>
         </form>
       </div>
     </div>
@@ -29,8 +29,25 @@
 export default {
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      loginName: "",
+      password: "",
+      isRemember: false
     };
+  },
+  methods: {
+    loginClick() {
+      if (this.isRemember) {
+        // 记住我的登录信息
+        localStorage.setItem("loginName", this.loginName);
+        localStorage.setItem("password", this.password);
+        localStorage.setItem("isRemember", this.isRemember);
+      }
+    }
+  },
+  created() {
+    this.loginName = localStorage.getItem("loginName");
+    this.password = localStorage.getItem("password");
+    this.isRemember = localStorage.getItem("isRemember");
   }
 };
 </script>
