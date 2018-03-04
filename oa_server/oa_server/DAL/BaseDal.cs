@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 
@@ -32,7 +33,7 @@ namespace oa_server.DAL
         /// 获取实体
         /// </summary>
         /// <returns></returns>
-        public DbSet<T> Get()
+        public DbSet<T> Get(Expression<Func<T, bool>> filter = null)
         {
             DbContext db = GetDbContext();
 
@@ -79,6 +80,19 @@ namespace oa_server.DAL
             db.Entry(model).State = EntityState.Deleted;
 
             return db.SaveChanges();
+        }
+
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="filter">查询条件</param>
+        /// <returns></returns>
+        public bool IsExist(Expression<Func<T, bool>> filter)
+        {
+            DbContext db = GetDbContext();
+            int result = db.Set<T>().Where(filter).Count();
+
+            return result > 0;
         }
     }
 }

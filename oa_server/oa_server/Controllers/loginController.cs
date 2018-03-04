@@ -15,10 +15,18 @@ namespace oa_server.Controllers
     public class loginController : ApiController
     {
         [HttpGet]
-        public void Get(string loginName, string password)
+        public IHttpActionResult Get(string loginName, string password)
         {
+            AjaxResult result = new AjaxResult();
             AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
-            bool isUserExist = _AuthorityUserDal.IsUserExist(loginName.Trim(), password.Trim());
+            AuthorityUser user = _AuthorityUserDal.GetUser(loginName.Trim(), password.Trim());
+            if (user == null)
+            {
+                result.state = false;
+            }
+            result.msg = user;
+
+            return Json(result);
         }
     }
 }
