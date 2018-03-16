@@ -205,7 +205,9 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebApiErrorHandleAttribute.cs" />
+    <Compile Include="Common\CommonHelper.cs" />
     <Compile Include="Common\JsonHelper.cs" />
+    <Compile Include="Common\SecurityHelper.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\ouController.cs" />
     <Compile Include="Controllers\ouTreeController.cs" />

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.OAuth;
+using oa_server.DAL;
+using oa_server.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,21 @@ namespace oa_server.Providers
     public class OpenAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
+        /// 验证 access_token 的请求,仅开放password请求
+        /// </summary>
+        public override async Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
+        {
+            if (context.TokenRequest.IsResourceOwnerPasswordCredentialsGrantType)
+            {
+                context.Validated();
+            }
+            else
+            {
+                context.Rejected();
+            }
+        }
+
+        /// <summary>
         /// 验证 client 信息
         /// </summary>
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -46,30 +63,17 @@ namespace oa_server.Providers
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
-            string grant_type = context.Parameters.GetValues("grant_type").FirstOrDefault();
-            if (grant_type != "password" && grant_type != "refresh_token")
-            {
-                if (clientId != "xishuai" || clientSecret != "123")
-                {
-                    context.SetError("invalid_client", "client or clientSecret is not valid");
-                    return;
-                }
-            }
+            //string grant_type = context.Parameters.GetValues("grant_type").FirstOrDefault();
+            //if (grant_type != "password" && grant_type != "refresh_token")
+            //{
+            //    if (clientId != "xishuai" || clientSecret != "123")
+            //    {
+            //        context.SetError("invalid_client", "client or clientSecret is not valid");
+            //        return;
+            //    }
+            //}
 
             context.Validated();
-        }
-
-        /// <summary>
-        /// 生成 access_token（client credentials 授权方式）
-        /// </summary>
-        public override async Task GrantClientCredentials(OAuthGrantClientCredentialsContext context)
-        {
-            var identity = new ClaimsIdentity(new GenericIdentity(
-                context.ClientId, OAuthDefaults.AuthenticationType),
-                context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
-            identity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
-
-            context.Validated(identity);
         }
 
         /// <summary>
@@ -77,6 +81,10 @@ namespace oa_server.Providers
         /// </summary>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
+            AuthorityOuUserDal _AuthorityOuUserDal = new AuthorityOuUserDal();
+            AuthorityOuDal _AuthorityOuDal = new AuthorityOuDal();
+
             if (string.IsNullOrEmpty(context.UserName))
             {
                 context.SetError("非法的用户名", "用户名不能为空！");
@@ -88,17 +96,34 @@ namespace oa_server.Providers
                 return;
             }
 
-            //if (context.UserName != "xishuai" || context.Password != "123")
-            //{
-            //    context.SetError("不合法的身份验证", "账号或密码不正确！");
-            //    return;
-            //}
+            AuthorityUser user = _AuthorityUserDal.GetUser(context.UserName, context.Password);
+            if (user != null)
+            {
+                List<int> ouUser = _AuthorityOuUserDal.Get(o => o.userId == user.id).Select(o => o.ouId).ToList();
+                List<AuthorityOu> ous = _AuthorityOuDal.Get(o => ouUser.Contains(o.id)).ToList();
 
-            var OAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
-            OAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            OAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
-            OAuthIdentity.AddClaim(new Claim("userinfo", "{username:\"" + context.UserName + "\",password:\"" + context.Password + "\"}"));
-            context.Validated(OAuthIdentity);
+                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+                identity.AddClaim(new Claim("AuthorityUser", JsonHelper.JsonSerialize(user)));
+                identity.AddClaim(new Claim("AuthorityOu", JsonHelper.JsonSerialize(ous)));
+                context.Validated(identity);
+            }
+            else
+            {
+                context.SetError("不合法的身份验证", "账号或密码不正确！");
+            }
+        }
+
+        /// <summary>
+        /// 生成 access_token（client credentials 授权方式）
+        /// </summary>
+        public override async Task GrantClientCredentials(OAuthGrantClientCredentialsContext context)
+        {
+            var identity = new ClaimsIdentity(
+                new GenericIdentity(context.ClientId, OAuthDefaults.AuthenticationType),
+                context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
+
+            context.Validated(identity);
         }
 
         #region 验证码模式、简化模式
