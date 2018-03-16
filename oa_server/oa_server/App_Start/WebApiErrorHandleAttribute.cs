@@ -16,7 +16,8 @@ namespace oa_server
             actionExecutedContext.Response = actionExecutedContext.Request.CreateResponse(HttpStatusCode.OK,
                 new AjaxResult
                 {
-                    msg = actionExecutedContext.Exception.Message
+                    msg = actionExecutedContext.Exception.Message,
+                    state = false
                 });
         }
     }
