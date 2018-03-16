@@ -24,7 +24,7 @@ namespace oa_server
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Register(config);
             app.UseCors(CorsOptions.AllowAll);  // 允许跨域请求
-            //app.UseWebApi(config);
+            app.UseWebApi(config);
         }
 
         public void ConfigureAuth(IAppBuilder app)
