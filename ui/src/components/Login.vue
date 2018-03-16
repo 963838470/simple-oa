@@ -41,6 +41,16 @@ export default {
         localStorage.setItem("loginName", this.loginName);
         localStorage.setItem("password", this.password);
         localStorage.setItem("isRemember", this.isRemember);
+
+        this.$ajax
+          .post("../token", {
+            grant_type: "password",
+            username: this.loginName,
+            password: this.password
+          })
+          .then(res => {
+            debugger;
+          });
       }
     }
   },
