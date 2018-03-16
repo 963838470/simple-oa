@@ -10,6 +10,7 @@ namespace oa_server
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Filters.Add(new AuthorizeAttribute());
             // 允许跨域
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API 路由

@@ -1,0 +1,7 @@
+﻿div.response > .curl {
+    display: none;
+}
+
+div.response > h4:nth-child(7), div.response > h4:nth-child(9), .response_code, .response_headers {
+    display: none;
+}

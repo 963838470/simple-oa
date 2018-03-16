@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <EmbeddedResource Include="Scripts\swagger_lang.js" />
+    <EmbeddedResource Include="Static\swagger_lang.js" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -158,6 +158,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Static\swagger_common.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

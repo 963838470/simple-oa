@@ -12,6 +12,7 @@ namespace oa_server.Controllers
     /// <summary>
     /// 登陆
     /// </summary>
+    [AllowAnonymous]
     public class loginController : ApiController
     {
         [HttpGet]
