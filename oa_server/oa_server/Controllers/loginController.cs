@@ -15,12 +15,18 @@ namespace oa_server.Controllers
     [AllowAnonymous]
     public class loginController : ApiController
     {
+        public class User
+        {
+            public string loginName { get; set; }
+            public string password { get; set; }
+        }
+
         [HttpPost]
-        public IHttpActionResult Get([FromBody]string loginName, string password)
+        public IHttpActionResult Get([FromBody]User model)
         {
             AjaxResult result = new AjaxResult();
             AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
-            AuthorityUser user = _AuthorityUserDal.GetUser(loginName.Trim(), password.Trim());
+            AuthorityUser user = _AuthorityUserDal.GetUser(model.loginName.Trim(), model.password.Trim());
             if (user == null)
             {
                 result.state = false;

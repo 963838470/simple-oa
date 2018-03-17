@@ -81,6 +81,7 @@ namespace oa_server.Providers
         /// </summary>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            context.Response.Headers.Add("Access-Control-Allow-Origin", new string[] { "*" });
             AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
             AuthorityOuUserDal _AuthorityOuUserDal = new AuthorityOuUserDal();
             AuthorityOuDal _AuthorityOuDal = new AuthorityOuDal();

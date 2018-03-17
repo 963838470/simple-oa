@@ -42,15 +42,20 @@ export default {
         localStorage.setItem("password", this.password);
         localStorage.setItem("isRemember", this.isRemember);
 
-        this.$ajax
-          .post("../token", {
-            grant_type: "password",
-            username: this.loginName,
-            password: this.password
-          })
-          .then(res => {
-            debugger;
-          });
+        this.$ajax({
+          method: "post",
+          url: "../token",
+          data:
+            "grant_type=password&username=" +
+            this.loginName +
+            "&password=" +
+            this.password,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        }).then(res => {
+          console.log(res.data);
+          debugger;
+          this.$store.state.commit("setToken", res.data);
+        });
       }
     }
   },
