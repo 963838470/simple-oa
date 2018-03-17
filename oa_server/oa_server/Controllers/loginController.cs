@@ -15,8 +15,8 @@ namespace oa_server.Controllers
     [AllowAnonymous]
     public class loginController : ApiController
     {
-        [HttpGet]
-        public IHttpActionResult Get(string loginName, string password)
+        [HttpPost]
+        public IHttpActionResult Get([FromBody]string loginName, string password)
         {
             AjaxResult result = new AjaxResult();
             AuthorityUserDal _AuthorityUserDal = new AuthorityUserDal();
