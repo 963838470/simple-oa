@@ -52,9 +52,19 @@ export default {
             this.password,
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }).then(res => {
-          console.log(res.data);
-          debugger;
-          this.$store.state.commit("setToken", res.data);
+          this.$store.commit("setToken", res.data); // 登陆成功,设置token
+          this.$ajax.get("user").then(res => {
+            var users = res.data;
+            if (users.length > 0) {
+              this.$store.commit("setUser", users[0]);
+            }
+          });
+          this.$ajax.get("ou").then(res => {
+            var ous = res.data;
+            if (ous.length > 0) {
+              this.$store.commit("setOu", ous[0]);
+            }
+          });
         });
       }
     }

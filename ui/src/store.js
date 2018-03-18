@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     setOu(state, obj) {
       state.ou = obj;
     },
-    setToken(token) {
+    setToken(state, token) {
       state.token = token;
     }
   }

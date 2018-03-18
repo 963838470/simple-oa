@@ -24,6 +24,14 @@ Axios.interceptors.request.use(function(config) {
     spinner: "el-icon-loading",
     background: "rgba(0, 0, 0, 0.7)"
   });
+  if (
+    store != null &&
+    store.state != null &&
+    store.state.token != null &&
+    store.state.token.access_token != null
+  ) {
+    config.headers.Authorization = "Bearer " + store.state.token.access_token;
+  }
   return config;
 });
 Axios.interceptors.response.use(
@@ -46,7 +54,7 @@ Axios.interceptors.response.use(
     ) {
       common.error(error.response.data.Message);
     }
-    if (error.response.status == 401) {
+    if (error.response != null && error.response.status == 401) {
       // 权限过期，处理
       router.push("login");
     }
