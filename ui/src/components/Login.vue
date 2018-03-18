@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import common from "../common.js";
 export default {
   data() {
     return {
@@ -53,16 +54,11 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }).then(res => {
           this.$store.commit("setToken", res.data); // 登陆成功,设置token
-          this.$ajax.get("user").then(res => {
-            var users = res.data;
-            if (users.length > 0) {
-              this.$store.commit("setUser", users[0]);
-            }
-          });
-          this.$ajax.get("ou").then(res => {
-            var ous = res.data;
-            if (ous.length > 0) {
-              this.$store.commit("setOu", ous[0]);
+          this.$ajax.get("info").then(res => {
+            if (res.data.user != null) {
+              this.$store.commit("setUser", res.data.user);
+              this.$store.commit("setOu", res.data.ou);
+              this.$router.push("/");
             }
           });
         });

@@ -25,6 +25,7 @@ Axios.interceptors.request.use(function(config) {
     background: "rgba(0, 0, 0, 0.7)"
   });
   if (
+    config.url != "../token" &&
     store != null &&
     store.state != null &&
     store.state.token != null &&
@@ -45,18 +46,21 @@ Axios.interceptors.response.use(
   },
   error => {
     loading.close();
-    if (error.message != null) {
+    if (error.response != null) {
+      if (error.response.status == 401) {
+        // 权限过期，处理
+        router.push("login");
+      } else if (error.response.data.error_description != null) {
+        common.error(error.response.data.error_description);
+      } else if (
+        error.response != null &&
+        error.response.data != null &&
+        error.response.data.Message != null
+      ) {
+        common.error(error.response.data.Message);
+      }
+    } else if (error.message != null) {
       common.error(error.message);
-    } else if (
-      error.response != null &&
-      error.response.data != null &&
-      error.response.data.Message != null
-    ) {
-      common.error(error.response.data.Message);
-    }
-    if (error.response != null && error.response.status == 401) {
-      // 权限过期，处理
-      router.push("login");
     }
     return Promise.reject(error);
   }

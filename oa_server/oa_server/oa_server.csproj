@@ -214,7 +214,7 @@
     <Compile Include="Common\CommonHelper.cs" />
     <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="Common\SecurityHelper.cs" />
-    <Compile Include="Controllers\loginController.cs" />
+    <Compile Include="Controllers\infoController.cs" />
     <Compile Include="Controllers\ouController.cs" />
     <Compile Include="Controllers\ouTreeController.cs" />
     <Compile Include="Controllers\ouUserController.cs" />
