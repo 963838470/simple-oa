@@ -5,7 +5,7 @@
     </h1>
     <h3>
       <span>欢迎您：</span>
-      <span>{{ $store.state.ou[0].name }}</span>
+      <span v-if="$store.state.ou.length>0">{{ $store.state.ou[0].name }}</span>
       <span>{{ $store.state.user.name }}</span>
     </h3>
   </div>
