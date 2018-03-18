@@ -21,9 +21,11 @@ namespace oa_server.Controllers
         public IHttpActionResult Get()
         {
             SecurityHelper _SecurityHelper = new Common.SecurityHelper();
-            JObject result = new JObject();
-            result["user"] = JsonHelper.JsonSerialize(_SecurityHelper.GetUser());
-            result["ou"] = JsonHelper.JsonSerialize(_SecurityHelper.GetOU());
+            var result = new
+            {
+                user = _SecurityHelper.GetUser(),
+                ou = _SecurityHelper.GetOU()
+            };
 
             return Json(result);
         }

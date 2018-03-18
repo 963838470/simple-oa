@@ -5,8 +5,8 @@
     </h1>
     <h3>
       <span>欢迎您：</span>
-      <span>{{ this.$store.state.ou.Name }}</span>
-      <span>{{ this.$store.state.user.Name }}</span>
+      <span>{{ $store.state.ou[0].name }}</span>
+      <span>{{ $store.state.user.name }}</span>
     </h3>
   </div>
 </template>
