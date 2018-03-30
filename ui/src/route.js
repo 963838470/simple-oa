@@ -6,11 +6,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: "/login",
-      component: Login,
-      hidden: true
-    },
+    { path: "/login", component: Login, hidden: true },
     {
       path: "/",
       name: "基础管理",
@@ -23,10 +19,6 @@ export default new Router({
         { path: "/default", name: "首页", component: resolve => require(["./components/base/Default.vue"], resolve), alias: "/", hidden: true }
       ]
     },
-    {
-      path: "*",
-      component: resolve => require(["./components/404.vue"], resolve),
-      hidden: true
-    }
+    { path: "*", component: resolve => require(["./components/404.vue"], resolve), hidden: true }
   ]
 })
