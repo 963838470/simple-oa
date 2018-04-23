@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace oa_server.Controllers
 {
@@ -20,6 +21,7 @@ namespace oa_server.Controllers
         /// 获取所有机构
         /// </summary>
         /// <returns></returns>
+        [ResponseType(typeof(List<AuthorityOu>))]
         public IHttpActionResult Get()
         {
             return Json(_AuthorityOuDal.Get());
